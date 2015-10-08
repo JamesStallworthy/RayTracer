@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <C:\Users\james\Documents\GitHub\332RayTracer\glm-0.9.6.3\glm\glm.hpp>
+#include <D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\glm-0.9.6.3\glm\glm.hpp>
 #include "Ray.h"
 //using namespace std;
 int width = 640;
@@ -9,6 +9,7 @@ int height = 480;
 glm::vec3 **image = new glm::vec3*[640];
 
 Ray ray;
+
 
 void Fill_Image() {
 	for (int x = 0; x < width; x++) {
