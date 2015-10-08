@@ -10,11 +10,13 @@
 //using namespace std;
 int width = 640;
 int height = 480;
-//glm::vec3 image[640][480];
 glm::vec3 **image = new glm::vec3*[640];
 
 Ray ray;
-Sphere One(glm::vec3(0, 0, -20), 4, glm::vec3(1, 0, 0));
+Sphere One(glm::vec3(0, 0, -20), 4, glm::vec3(0, 1, 0));
+Sphere Two(glm::vec3(5, -1, -15), 4, glm::vec3(0, 1, 0));
+Sphere Three(glm::vec3(5, 0, -25), 4, glm::vec3(0, 0, 1));
+Sphere Four(glm::vec3(-5, -1, -15), 4, glm::vec3(1, 1, 0));
 
 void Fill_Image() {
 	for (int x = 0; x < width; x++) {

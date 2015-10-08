@@ -1,5 +1,8 @@
 #include "Sphere.h"
 #include <iostream>
+Sphere::Sphere()
+{
+}
 Sphere::Sphere(glm::vec3 o, float r, glm::vec3 c)
 {
 	Origin = o;

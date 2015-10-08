@@ -8,6 +8,7 @@ class Ray
 private:
 	float PixelNormalized(int val,int secondVal);
 	float ImageAspectRatio;
+	glm::vec3 CheckHit(Sphere* s);
 public:
 	glm::vec3 Origin;
 	glm::vec3 Direction;
