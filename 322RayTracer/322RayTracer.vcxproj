@@ -79,6 +79,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\SDL2-2.0.3\VisualC\SDLmain\Win32\Debug;D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\SDL2-2.0.3\VisualC\SDL\Win32\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

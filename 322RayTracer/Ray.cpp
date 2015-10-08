@@ -29,7 +29,7 @@ void Ray::RayCast(glm::vec3** img, Sphere* s)
 			Pcameraspace = glm::vec3(WorldSpacex, WorldSpacey,-1);
 			Direction = glm::normalize(Pcameraspace - Origin);
 			if (s->RaySphere(Origin, Direction)){
-				std::cout << true << std::endl;
+				//std::cout << true << std::endl;
 				img[x][y] = glm::vec3(1, 0, 0);
 			}
 				
