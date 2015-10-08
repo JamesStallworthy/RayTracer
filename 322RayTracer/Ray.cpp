@@ -10,7 +10,8 @@ float Ray::PixelNormalized(int val,int secondVal)
 	return ((float)val + 0.5)/secondVal;
 }
 
-void Ray::RayCast(glm::vec3** img)
+
+void Ray::RayCast(glm::vec3** img, Sphere* s)
 {
 	 
 	float RemappedX;//Normalised x of pixel
@@ -27,11 +28,16 @@ void Ray::RayCast(glm::vec3** img)
 			WorldSpacey = RemappedY * fov;
 			Pcameraspace = glm::vec3(WorldSpacex, WorldSpacey,-1);
 			Direction = glm::normalize(Pcameraspace - Origin);
-
-			img[x][y] = Direction;
+			if (s->RaySphere(Origin, Direction)){
+				std::cout << true << std::endl;
+				img[x][y] = glm::vec3(1, 0, 0);
+			}
+				
 		}
 
 	}//std::cout << WorldSpaceX << std::endl;
 }
+
+
 
 

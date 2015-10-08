@@ -1,7 +1,10 @@
+#include <SDL.h>
 #include <iostream>
+
 #include <fstream>
 #include <D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\glm-0.9.6.3\glm\glm.hpp>
 #include "Ray.h"
+#include "Sphere.h"
 //using namespace std;
 int width = 640;
 int height = 480;
@@ -9,7 +12,7 @@ int height = 480;
 glm::vec3 **image = new glm::vec3*[640];
 
 Ray ray;
-
+Sphere One(glm::vec3(0, 0, -20), 4, glm::vec3(1, 0, 0));
 
 void Fill_Image() {
 	for (int x = 0; x < width; x++) {
@@ -32,10 +35,22 @@ void Save_Image() {
 	ofs.close();
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+
+	SDL_Window * window = nullptr;
+
+	if (SDL_Init(SDL_INIT_VIDEO) > 0) {
+		window = SDL_CreateWindow("Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);
+		SDL_UpdateWindowSurface(window);
+		SDL_Delay(2000);
+	}
+
 	for (int i(0); i < width; i++) image[i] = new glm::vec3[height];
-	Fill_Image();
-	ray.RayCast(image);
+	//Fill_Image();
+	ray.RayCast(image,&One);
 	Save_Image();
+
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 	return 0;
 }

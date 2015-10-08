@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\glm-0.9.6.3\glm\glm.hpp>
+#include "Sphere.h"
 
 class Ray
 {
@@ -13,6 +14,5 @@ public:
 	Ray::Ray();
 	int width = 640;
 	int height = 480;
-	void RayCast(glm::vec3**);
-	
+	void RayCast(glm::vec3**, Sphere*);
 };
