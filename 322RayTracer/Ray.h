@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include <D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\glm-0.9.6.3\glm\glm.hpp>
+#include <C:\Users\james\Documents\GitHub\332RayTracer\glm-0.9.6.3\glm\glm.hpp>
 #include "Sphere.h"
 
 class Ray
