@@ -44,12 +44,6 @@ void Save_Image() {
 }
 
 int main(int argc, char **argv) {
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(width, height);
-	glutCreateWindow("RayCasting");
-	glutMainLoop();
 	ShapeArray[0] = One;
 	ShapeArray[1] = Two;
 	ShapeArray[2] = Three;
@@ -60,11 +54,18 @@ int main(int argc, char **argv) {
 	//Fill_Image();
 	clock_t t;
 	t = clock();
-	ray.RayCast(image,ShapeArray,5);
+	ray.RayCast(image, ShapeArray, 5);
 	t = clock() - t;
 	std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
 	Save_Image();
 	std::cin.get();
+	/*
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+	glutInitWindowPosition(100, 100);
+	glutInitWindowSize(width, height);
+	glutCreateWindow("RayCasting");
+	glutMainLoop();
 	return 0;
-
+	*/
 }
