@@ -10,13 +10,16 @@ float Ray::PixelNormalized(int val,int secondVal)
 	return ((float)val + 0.5)/secondVal;
 }
 
-glm::vec3 Ray::CheckHit(Sphere* s)
+float Ray::CheckHit(Shape* s)
 {
-	return glm::vec3(0,0,0);
+	if (s->Intersection(Origin, Direction)) {
+		
+	}
+	return 0.0;
 }
 
 
-void Ray::RayCast(glm::vec3** img, Sphere* s)
+void Ray::RayCast(glm::vec3** img, Shape* s[])
 {
 	
 	std::cout << ImageAspectRatio << std::endl;
@@ -34,9 +37,7 @@ void Ray::RayCast(glm::vec3** img, Sphere* s)
 			WorldSpacey = RemappedY * fov;
 			Pcameraspace = glm::vec3(WorldSpacex, WorldSpacey,-1);
 			Direction = glm::normalize(Pcameraspace - Origin);
-			if (s->RaySphere(Origin, Direction)) {
-				img[x][y]=s->Colour;
-			}
+			CheckHit(s[0]);
 		}
 
 	}//std::cout << WorldSpaceX << std::endl;
