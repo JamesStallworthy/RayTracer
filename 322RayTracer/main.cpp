@@ -46,8 +46,9 @@ int main() {
 	ShapeArray[1] = Two;
 	for (int i(0); i < width; i++) image[i] = new glm::vec3[height];
 	//Fill_Image();
-	ray.RayCast(image,ShapeArray);
+	ray.RayCast(image,ShapeArray,2);
 	Save_Image();
 	std::cin.get();
 	return 0;
+
 }
