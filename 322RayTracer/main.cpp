@@ -1,5 +1,5 @@
 #include <iostream>
-#include <GL\glut.h>
+
 #include <fstream>
 #include <glm.hpp>
 #include "Shape.h"
@@ -43,7 +43,7 @@ void Save_Image() {
 	ofs.close();
 }
 
-int main(int argc, char **argv) {
+int main() {
 	ShapeArray[0] = One;
 	ShapeArray[1] = Two;
 	ShapeArray[2] = Three;
@@ -58,14 +58,7 @@ int main(int argc, char **argv) {
 	t = clock() - t;
 	std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
 	Save_Image();
-	std::cin.get();
-	/*
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(width, height);
-	glutCreateWindow("RayCasting");
-	glutMainLoop();
+	
+	
 	return 0;
-	*/
 }
