@@ -13,11 +13,13 @@ int width = 640;
 int height = 480;
 glm::vec3 **image = new glm::vec3*[640];
 
-Ray ray;
+Ray ray(30);
 //Sphere One(glm::vec3(0, 0, -20), 4, glm::vec3(0, 0, 1));
-Shape* One = new Sphere(glm::vec3(0, 0, -20), 4, glm::vec3(0, 0, 1));
-Shape* Two = new Sphere(glm::vec3(0, 5, -10), 4, glm::vec3(0, 1, 0));
-Shape* ShapeArray[2];
+Shape* One = new Sphere(glm::vec3(0, 0, -20), 4, glm::vec3(1, 0.32, 0.36));
+Shape* Two = new Sphere(glm::vec3(5, -1, -15), 2, glm::vec3(0.9, 0.76, 0.46));
+Shape* Three = new Sphere(glm::vec3(5, 0, -25), 3, glm::vec3(0.65, 0.77, 0.97));
+Shape* Four = new Sphere(glm::vec3(-5.5, 0, -15), 3, glm::vec3(0.90, 0.9, 0.9));
+Shape* ShapeArray[4];
 
 void Fill_Image() {
 	for (int x = 0; x < width; x++) {
@@ -44,11 +46,13 @@ void Save_Image() {
 int main() {
 	ShapeArray[0] = One;
 	ShapeArray[1] = Two;
+	ShapeArray[2] = Three;
+	ShapeArray[3] = Four;
 	for (int i(0); i < width; i++) image[i] = new glm::vec3[height];
 	//Fill_Image();
-	ray.RayCast(image,ShapeArray,2);
+	ray.RayCast(image,ShapeArray,4);
 	Save_Image();
-	std::cin.get();
+	//std::cin.get();
 	return 0;
 
 }

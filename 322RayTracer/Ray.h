@@ -11,10 +11,11 @@ private:
 	float ImageAspectRatio;
 	int CheckHit(Shape* s[]);
 	int AmountOfShapes;
+	float Fov;
 public:
 	glm::vec3 Origin;
 	glm::vec3 Direction;
-	Ray::Ray();
+	Ray::Ray(float);
 	int width = 640;
 	int height = 480;
 	void RayCast(glm::vec3**, Shape*[],int Amount);

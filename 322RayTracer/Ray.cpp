@@ -1,9 +1,9 @@
 #include "Ray.h"
 #include <math.h>
-Ray::Ray() {
+Ray::Ray(float _Fov) {
 	Origin = glm::vec3(0,0,0);
 	ImageAspectRatio = float(width) / float(height);
-	
+	Fov = tan((_Fov * 3.14 / 180) / 2);
 }
 
 float Ray::PixelNormalized(int val,int secondVal)
@@ -13,10 +13,17 @@ float Ray::PixelNormalized(int val,int secondVal)
 
 int Ray::CheckHit(Shape* s[])
 {
-	if (s[0]->Intersection(Origin, Direction) != -1) {
-		return 0;
+	int LowestID=-1;
+	float LowestValue=99;
+	float temp;
+	for (int i = 0; i < AmountOfShapes; i++) {
+		temp=s[i]->Intersection(Origin, Direction);
+		if (temp != -1 && temp < LowestValue) {
+			LowestValue = temp;
+			LowestID = i;
+		}
 	}
-	return -1;
+	return LowestID;
 }
 
 
@@ -29,19 +36,18 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[],int Amount)
 	float WorldSpacex;
 	float WorldSpacey;
 	glm::vec3 Pcameraspace; 
-	float fov = tan((90*3.14/180) / 2);
+	
 	for (int x = 0; x < width; x++) {
 		for (int y = 0; y < height; y++) {
 			RemappedX = ((2*PixelNormalized(x,width) - 1)*ImageAspectRatio);
 			RemappedY = (1 -2*PixelNormalized(y,height));
-			WorldSpacex = RemappedX * fov;
-			WorldSpacey = RemappedY * fov;
+			WorldSpacex = RemappedX * Fov;
+			WorldSpacey = RemappedY * Fov;
 			Pcameraspace = glm::vec3(WorldSpacex, WorldSpacey,-1);
 			Direction = glm::normalize(Pcameraspace - Origin);
-			int ShapeID;
-			ShapeID = CheckHit(ShapeArray);
+			int ShapeID = CheckHit(ShapeArray);
 			if (ShapeID != -1) {
-				img[x][y] == ShapeArray[ShapeID]->Colour;
+				img[x][y] = ShapeArray[ShapeID]->Colour;
 			}
 		}
 
