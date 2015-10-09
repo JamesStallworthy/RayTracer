@@ -1,19 +1,19 @@
-﻿Build started 09/10/2015 15:42:19.
-     1>Project "D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\322RayTracer\322RayTracer.vcxproj" on node 2 (Build target(s)).
+﻿Build started 09/10/2015 21:23:18.
+     1>Project "C:\Users\james\Documents\GitHub\332RayTracer\322RayTracer\322RayTracer.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\\glm-0.9.6.3\glm" /I"D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\SDL2-2.0.3\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Users\james\Documents\GitHub\332RayTracer\\glm-0.9.6.3\glm" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
-     1>d:\james\documents\visual studio 2015\projects\332raytracer\322raytracer\main.cpp(35): warning C4018: '<': signed/unsigned mismatch
-     1>d:\james\documents\visual studio 2015\projects\332raytracer\322raytracer\main.cpp(36): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\james\documents\github\332raytracer\322raytracer\main.cpp(36): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\james\documents\github\332raytracer\322raytracer\main.cpp(37): warning C4018: '<': signed/unsigned mismatch
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\Debug\322RayTracer.exe" /INCREMENTAL /NOLOGO /LIBPATH:"D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\SDL2-2.0.3\VisualC\SDLmain\Win32\Debug" /LIBPATH:"D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\SDL2-2.0.3\VisualC\SDL\Win32\Debug" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\Debug\322RayTracer.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\Debug\322RayTracer.lib" /MACHINE:X86 Debug\main.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\james\Documents\GitHub\332RayTracer\Debug\322RayTracer.exe" /INCREMENTAL /NOLOGO OpenGL32.lib freeglut.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\james\Documents\GitHub\332RayTracer\Debug\322RayTracer.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\james\Documents\GitHub\332RayTracer\Debug\322RayTracer.lib" /MACHINE:X86 Debug\main.obj
          Debug\Plane.obj
          Debug\Ray.obj
          Debug\Shape.obj
          Debug\Sphere.obj
-         322RayTracer.vcxproj -> D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\Debug\322RayTracer.exe
-     1>Done Building Project "D:\james\Documents\Visual Studio 2015\Projects\332RayTracer\322RayTracer\322RayTracer.vcxproj" (Build target(s)).
+         322RayTracer.vcxproj -> C:\Users\james\Documents\GitHub\332RayTracer\Debug\322RayTracer.exe
+     1>Done Building Project "C:\Users\james\Documents\GitHub\332RayTracer\322RayTracer\322RayTracer.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.11
+Time Elapsed 00:00:04.81

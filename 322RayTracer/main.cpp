@@ -1,11 +1,11 @@
-//#include <SDL.h>
 #include <iostream>
-
+#include <GL\glut.h>
 #include <fstream>
 #include <glm.hpp>
 #include "Shape.h"
 #include "Ray.h"
 #include "Sphere.h"
+#include "Plane.h"
 #include <time.h>
 
 //using namespace std;
@@ -19,7 +19,8 @@ Shape* One = new Sphere(glm::vec3(0, 0, -20), 4, glm::vec3(1, 0.32, 0.36));
 Shape* Two = new Sphere(glm::vec3(5, -1, -15), 2, glm::vec3(0.9, 0.76, 0.46));
 Shape* Three = new Sphere(glm::vec3(5, 0, -25), 3, glm::vec3(0.65, 0.77, 0.97));
 Shape* Four = new Sphere(glm::vec3(-5.5, 0, -15), 3, glm::vec3(0.90, 0.9, 0.9));
-Shape* ShapeArray[4];
+Shape* plane = new Plane(glm::vec3(0, -4, -20), glm::vec3(0, 1, 0), glm::vec3(1, 1, 1));
+Shape* ShapeArray[5];
 
 void Fill_Image() {
 	for (int x = 0; x < width; x++) {
@@ -42,18 +43,24 @@ void Save_Image() {
 	ofs.close();
 }
 
-
-int main() {
+int main(int argc, char **argv) {
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+	glutInitWindowPosition(100, 100);
+	glutInitWindowSize(width, height);
+	glutCreateWindow("RayCasting");
+	glutMainLoop();
 	ShapeArray[0] = One;
 	ShapeArray[1] = Two;
 	ShapeArray[2] = Three;
 	ShapeArray[3] = Four;
+	ShapeArray[4] = plane;
 	//fill image array
 	for (int i(0); i < width; i++) image[i] = new glm::vec3[height];
 	//Fill_Image();
 	clock_t t;
 	t = clock();
-	ray.RayCast(image,ShapeArray,4);
+	ray.RayCast(image,ShapeArray,5);
 	t = clock() - t;
 	std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
 	Save_Image();
