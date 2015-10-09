@@ -1,7 +1,9 @@
 #include "Ray.h"
 #include <math.h>
-Ray::Ray(float _Fov) {
+Ray::Ray(float _Fov, int ScreenWidth, int ScreenHeight) {
 	Origin = glm::vec3(0,0,0);
+	width = ScreenWidth;
+	height = ScreenHeight;
 	ImageAspectRatio = float(width) / float(height);
 	Fov = tan((_Fov * 3.14 / 180) / 2);
 }
