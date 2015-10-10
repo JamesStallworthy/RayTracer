@@ -45,7 +45,7 @@ glm::vec3 Triangle::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirecti
 {
 	glm::vec3 ContactPoint = ROrigin + _t*RDirection;
 	glm::vec3 l = glm::normalize(ContactPoint - light->Position);
-	return CalcAmbient()+CalcDiffuse(l,Normal);
+	return CalcAmbient() + CalcDiffuse(l, Normal) + CalcSpecular(l,Normal,CameraPos,ContactPoint);
 }
 
 glm::vec3 Triangle::CalcAmbient()
@@ -59,7 +59,10 @@ glm::vec3 Triangle::CalcDiffuse(glm::vec3 l, glm::vec3 n)
 	return Colour*Calc;
 }
 
-glm::vec3 Triangle::CalcSpecular(glm::vec3, glm::vec3, glm::vec3, glm::vec3)
-{
-	return glm::vec3();
+glm::vec3 Triangle::CalcSpecular(glm::vec3 l, glm::vec3 n, glm::vec3 CameraPos, glm::vec3 ContactPoint) {
+	glm::vec3 v = glm::normalize(CameraPos - ContactPoint);
+	glm::vec3 r = glm::normalize(-2 * (glm::dot(l, n))*n + l);
+	glm::vec3 Calc1 = Colour * light->Intensity;
+	float Calc2 = pow(std::fmax(0, glm::dot(r, v)), 10);
+	return Calc1*Calc2;
 }
