@@ -16,5 +16,5 @@ public:
 	virtual float Intersection(glm::vec3 Origin, glm::vec3 Direction);
 	virtual glm::vec3 PhongShading(float, glm::vec3, glm::vec3);
 	glm::vec3 CalcAmbient();
-	glm::vec3 CalcDiffuse(float);
+	glm::vec3 CalcDiffuse(float,glm::vec3, glm::vec3);
 };
