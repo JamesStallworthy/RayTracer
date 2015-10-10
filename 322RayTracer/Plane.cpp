@@ -18,22 +18,3 @@ glm::vec3 Plane::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirection,
 	glm::vec3 l = glm::normalize(ContactPoint - light->Position);
 	return CalcAmbient() + CalcDiffuse(l, Normal) + CalcSpecular(l, Normal, CameraPos, ContactPoint);
 }
-
-glm::vec3 Plane::CalcAmbient()
-{
-	return Colour*Ambient;
-}
-
-glm::vec3 Plane::CalcDiffuse(glm::vec3 l, glm::vec3 n)
-{
-	float Calc = (light->Intensity*std::fmax(0, glm::dot(l, n)));
-	return Colour*Calc;
-}
-
-glm::vec3 Plane::CalcSpecular(glm::vec3 l, glm::vec3 n, glm::vec3 CameraPos, glm::vec3 ContactPoint) {
-	glm::vec3 v = glm::normalize(CameraPos - ContactPoint);
-	glm::vec3 r = glm::normalize(-2 * (glm::dot(l, n))*n + l);
-	glm::vec3 Calc1 = Colour * light->Intensity;
-	float Calc2 = pow(std::fmax(0, glm::dot(r, v)), Specular);
-	return Calc1*Calc2;
-}
