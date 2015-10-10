@@ -8,6 +8,7 @@
 #include <time.h>
 #include "Triangle.h"
 #include "Light.h"
+#include <SDL.h>
 
 //using namespace std;
 int width = 640;
@@ -49,7 +50,12 @@ void Save_Image() {
 	ofs.close();
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+	SDL_Init(SDL_INIT_EVERYTHING);
+	SDL_Window *window;
+	window = SDL_CreateWindow("Raycaster", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_RESIZABLE);
+	SDL_Surface *surface = SDL_GetWindowSurface(window);
+	ray.SetWindow(window, surface);
 	ShapeArray[0] = One;
 	ShapeArray[1] = Two;
 	ShapeArray[2] = Three;
@@ -66,8 +72,20 @@ int main() {
 	t = clock() - t;
 	std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
 	Save_Image();
+
+	bool Display = true;
+	
+	SDL_Event event;
+	while (Display) {
+		while (SDL_PollEvent(&event)) {
+			if (event.type == SDL_QUIT) {
+				Display = false;
+				break;
+			}
+		}
+	}
 	std::cin.get();
-	
-	
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 	return 0;
 }

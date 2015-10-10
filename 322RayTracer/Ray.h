@@ -4,6 +4,7 @@
 #include "Sphere.h"
 #include <vector>
 #include "light.h"
+#include <SDL.h>
 
 class Ray
 {
@@ -17,10 +18,16 @@ private:
 	float Fov;
 	float t;
 	Light* light;
+	SDL_Window *window;
+	SDL_Surface *surface;
+	Uint32 PixelColour;
+	SDL_Rect Pixel;
 public:
 	glm::vec3 Origin;
 	glm::vec3 Direction;
 	Ray::Ray(float, int, int, Light*);
 	void RayCast(glm::vec3**, Shape*[],int Amount);
 	float HardShadows(Shape*[], int);
+	void SetWindow(SDL_Window *_window, SDL_Surface *surface);
+	void DrawToScreen(glm::vec3 _Colour, int x, int y);
 };
