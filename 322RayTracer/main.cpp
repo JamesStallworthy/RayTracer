@@ -13,7 +13,7 @@
 int width = 640;
 int height = 480;
 glm::vec3 **image = new glm::vec3*[width];
-Light light(glm::vec3(0,30,-20),1);
+Light light(glm::vec3(0,30,0),1);
 Ray ray(30, width, height);
 //Sphere One(glm::vec3(0, 0, -20), 4, glm::vec3(0, 0, 1));
 Shape* One = new Sphere(glm::vec3(0, 0, -20), 4, glm::vec3(1, 0.32, 0.36),0.1,&light);
@@ -64,6 +64,7 @@ int main() {
 	t = clock() - t;
 	std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
 	Save_Image();
+	std::cin.get();
 	
 	
 	return 0;
