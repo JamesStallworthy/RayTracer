@@ -22,5 +22,5 @@ public:
 	glm::vec3 Direction;
 	Ray::Ray(float, int, int, Light*);
 	void RayCast(glm::vec3**, Shape*[],int Amount);
-	float HardShadows(Shape*[]);
+	float HardShadows(Shape*[], int);
 };

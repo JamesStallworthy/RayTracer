@@ -51,21 +51,23 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[],int Amount)
 			Direction = glm::normalize(Pcameraspace - Origin);
 			int ShapeID = CheckHit(ShapeArray,Origin, Direction);
 			if (ShapeID != -1) {
-				img[x][y] = (ShapeArray[ShapeID]->PhongShading(t, Origin, Direction, Origin)); //*HardShadows(ShapeArray);
+				img[x][y] = (ShapeArray[ShapeID]->PhongShading(t, Origin, Direction, Origin));// *HardShadows(ShapeArray, ShapeID);
 			}
 		}
 
 	}//std::cout << WorldSpaceX << std::endl;
 }
 
-float Ray::HardShadows(Shape* ShapeArray[])
+float Ray::HardShadows(Shape* ShapeArray[], int CurrentShape)
 {
-	glm::vec3 ContactPoint = Origin + t*Direction;
-	glm::vec3 VecToLight = -ContactPoint-light->Position ;
-	if (CheckHit(ShapeArray, ContactPoint, VecToLight) == -1)
-		return 0.5;
-	else
+	float newt = t - 0.1;
+	glm::vec3 ContactPoint = Origin + newt*Direction;
+	glm::vec3 VecToLight = light->Position - ContactPoint ;
+	int HitObject = CheckHit(ShapeArray, ContactPoint, VecToLight);
+	if (HitObject == -1 ||HitObject == CurrentShape)
 		return 1;
+	else
+		return 0.5;
 }
 
 
