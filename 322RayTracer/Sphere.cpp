@@ -16,8 +16,9 @@ float Sphere::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection) {
 	return (tca-sqrt(pow(Radius,2) - SS));
 }
 
-glm::vec3 Sphere::PhongShading(float _t)
+glm::vec3 Sphere::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirection)
 {
+	CalcDiffuse(_t);
 	return CalcAmbient();;
 }
 
@@ -26,8 +27,9 @@ glm::vec3 Sphere::CalcAmbient()
 	return Colour*Ambient;
 }
 
-glm::vec3 Sphere::CalcDiffuse() 
+glm::vec3 Sphere::CalcDiffuse(float t) 
 {
+	glm::vec3 ContactPoint;
 	glm::vec3 l;
 	(light->Intensity*std::fmax(0, 1));
 	return Colour;
