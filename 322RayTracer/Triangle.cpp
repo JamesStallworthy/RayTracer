@@ -4,8 +4,8 @@ void Triangle::CalculateNormal()
 {
 	glm::vec3 v1 = b - a;
 	glm::vec3 v2 = c - a;
-	Normal = glm::normalize(glm::cross(v1, v2));
-	std::cout << Normal.y << std::endl;
+	Normal = glm::normalize(glm::cross(v2, v1));
+	
 
 }
 
@@ -43,10 +43,23 @@ float Triangle::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection)
 
 glm::vec3 Triangle::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirection, glm::vec3 CameraPos)
 {
-	return CalcAmbient();;
+	glm::vec3 ContactPoint = ROrigin + _t*RDirection;
+	glm::vec3 l = glm::normalize(ContactPoint - light->Position);
+	return CalcAmbient()+CalcDiffuse(l,Normal);
 }
 
 glm::vec3 Triangle::CalcAmbient()
 {
 	return Colour*Ambient;
+}
+
+glm::vec3 Triangle::CalcDiffuse(glm::vec3 l, glm::vec3 n)
+{
+	float Calc = (light->Intensity*std::fmax(0, glm::dot(l, n)));
+	return Colour*Calc;
+}
+
+glm::vec3 Triangle::CalcSpecular(glm::vec3, glm::vec3, glm::vec3, glm::vec3)
+{
+	return glm::vec3();
 }

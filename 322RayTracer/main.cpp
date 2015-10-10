@@ -21,8 +21,8 @@ Shape* Two = new Sphere(glm::vec3(5, -1, -15), 2, glm::vec3(0.9, 0.76, 0.46),0.1
 Shape* Three = new Sphere(glm::vec3(5, 0, -25), 3, glm::vec3(0.65, 0.77, 0.97),0.1, &light);
 Shape* Four = new Sphere(glm::vec3(-5.5, 0, -15), 3, glm::vec3(0.90, 0.9, 0.9),0.1, &light);
 Shape* plane = new Plane(glm::vec3(0, -4, -20), glm::vec3(0, 1, 0), glm::vec3(1, 1, 1),0.1);
-//Shape* triangle = new Triangle(glm::vec3(0, 0, -10), glm::vec3(0, 2, -10), glm::vec3(2, 0, -10), glm::vec3(1, 0, 0));
-Shape* triangle = new Triangle(glm::vec3(0, 0, -5), glm::vec3(2, 0, -5), glm::vec3(1.5f, 1, -15), glm::vec3(1, 0, 0),0.1);
+//Shape* triangle = new Triangle(glm::vec3(0, 0, -10), glm::vec3(0, 2, -10), glm::vec3(2, 0, -10), glm::vec3(1, 0, 0), 0.1, &light);
+Shape* triangle = new Triangle(glm::vec3(0, 0, -5), glm::vec3(2, 0, -5), glm::vec3(1.5f, 1, -15), glm::vec3(1, 0, 0),0.1,&light);
 Shape* ShapeArray[6];
 
 
