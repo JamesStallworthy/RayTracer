@@ -26,3 +26,8 @@ glm::vec3 Sphere::CalcAmbient()
 	return Colour*Ambient;
 }
 
+glm::vec3 Sphere::CalcDiffuse() 
+{
+	
+}
+
