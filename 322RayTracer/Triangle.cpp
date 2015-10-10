@@ -63,6 +63,6 @@ glm::vec3 Triangle::CalcSpecular(glm::vec3 l, glm::vec3 n, glm::vec3 CameraPos, 
 	glm::vec3 v = glm::normalize(CameraPos - ContactPoint);
 	glm::vec3 r = glm::normalize(-2 * (glm::dot(l, n))*n + l);
 	glm::vec3 Calc1 = Colour * light->Intensity;
-	float Calc2 = pow(std::fmax(0, glm::dot(r, v)), 10);
+	float Calc2 = pow(std::fmax(0, glm::dot(r, v)), Specular);
 	return Calc1*Calc2;
 }

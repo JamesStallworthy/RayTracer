@@ -12,8 +12,8 @@ public:
 	glm::vec3 c;
 	Light* light;
 	void CalculateNormal();
-	Triangle(glm::vec3 Point1, glm::vec3 Point2, glm::vec3 Point3, glm::vec3 c, float _Ambient, Light* _light) :
-		Shape(c,_Ambient), a(Point1), b(Point2), c(Point3), light(_light)
+	Triangle(glm::vec3 Point1, glm::vec3 Point2, glm::vec3 Point3, glm::vec3 c, float _Ambient, float _Specular, Light* _light) :
+		Shape(c,_Ambient,_Specular), a(Point1), b(Point2), c(Point3), light(_light)
 	{
 		CalculateNormal();
 	};

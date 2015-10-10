@@ -7,8 +7,8 @@ public:
 	glm::vec3 Origin;
 	glm::vec3 Normal;
 	Light* light;
-	Plane(glm::vec3 o, glm::vec3 n, glm::vec3 c, float _Ambient, Light* _light) :
-		Shape(c,_Ambient), Origin(o), light(_light)
+	Plane(glm::vec3 o, glm::vec3 n, glm::vec3 c, float _Ambient,float _Specular, Light* _light) :
+		Shape(c,_Ambient,_Specular), Origin(o), light(_light)
 	{
 		Normal = glm::normalize(n);
 	};

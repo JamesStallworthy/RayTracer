@@ -9,8 +9,8 @@ public:
 	Light* light;
 	glm::vec3 Origin;
 	float Radius;
-	Sphere(glm::vec3 o, float r, glm::vec3 c,float _Ambient,Light* _light) :
-		Shape(c,_Ambient), Origin(o), Radius(r),light(_light)
+	Sphere(glm::vec3 o, float r, glm::vec3 c,float _Ambient, float _Specular, Light* _light) :
+		Shape(c,_Ambient,_Specular), Origin(o), Radius(r),light(_light)
 	{
 	};
 	virtual float Intersection(glm::vec3 Origin, glm::vec3 Direction);
