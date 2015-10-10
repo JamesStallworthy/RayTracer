@@ -3,6 +3,7 @@
 #include <glm.hpp>
 #include "Sphere.h"
 #include <vector>
+#include "light.h"
 
 class Ray
 {
@@ -15,10 +16,11 @@ private:
 	int height;
 	float Fov;
 	float t;
+	Light* light;
 public:
 	glm::vec3 Origin;
 	glm::vec3 Direction;
-	Ray::Ray(float, int, int);
+	Ray::Ray(float, int, int, Light*);
 	void RayCast(glm::vec3**, Shape*[],int Amount);
-	bool HardShadows();
+	float HardShadows(Shape*[]);
 };

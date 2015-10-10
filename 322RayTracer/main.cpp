@@ -14,7 +14,7 @@ int width = 640;
 int height = 480;
 glm::vec3 **image = new glm::vec3*[width];
 Light light(glm::vec3(0,30,0),1);
-Ray ray(50, width, height);
+Ray ray(50, width, height, &light);
 //Sphere One(glm::vec3(0, 0, -20), 4, glm::vec3(0, 0, 1));
 Shape* One = new Sphere(glm::vec3(0, 0, -20), 4, glm::vec3(1, 0.32, 0.36),0.1,&light);
 Shape* Two = new Sphere(glm::vec3(5, -1, -15), 2, glm::vec3(0.9, 0.76, 0.46),0.1,&light);

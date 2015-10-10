@@ -1,11 +1,12 @@
 #include "Ray.h"
 #include <math.h>
-Ray::Ray(float _Fov, int ScreenWidth, int ScreenHeight) {
+Ray::Ray(float _Fov, int ScreenWidth, int ScreenHeight,Light* _light) {
 	Origin = glm::vec3(0,0,0);
 	width = ScreenWidth;
 	height = ScreenHeight;
 	ImageAspectRatio = float(width) / float(height);
 	Fov = tan((_Fov * 3.14 / 180) / 2);
+	light = _light;
 }
 
 float Ray::PixelNormalized(int val,int secondVal)
@@ -50,18 +51,21 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[],int Amount)
 			Direction = glm::normalize(Pcameraspace - Origin);
 			int ShapeID = CheckHit(ShapeArray,Origin, Direction);
 			if (ShapeID != -1) {
-				img[x][y] = ShapeArray[ShapeID]->PhongShading(t,Origin,Direction, Origin);
+				img[x][y] = (ShapeArray[ShapeID]->PhongShading(t, Origin, Direction, Origin)); //*HardShadows(ShapeArray);
 			}
 		}
 
 	}//std::cout << WorldSpaceX << std::endl;
 }
 
-bool Ray::HardShadows()
+float Ray::HardShadows(Shape* ShapeArray[])
 {
 	glm::vec3 ContactPoint = Origin + t*Direction;
-	glm::vec3 VecToLight;
-	return false;
+	glm::vec3 VecToLight = -ContactPoint-light->Position ;
+	if (CheckHit(ShapeArray, ContactPoint, VecToLight) == -1)
+		return 0.5;
+	else
+		return 1;
 }
 
 
