@@ -13,7 +13,7 @@
 int width = 640;
 int height = 480;
 glm::vec3 **image = new glm::vec3*[width];
-
+Light light(glm::vec3(0,30,-20),1);
 Ray ray(30, width, height);
 //Sphere One(glm::vec3(0, 0, -20), 4, glm::vec3(0, 0, 1));
 Shape* One = new Sphere(glm::vec3(0, 0, -20), 4, glm::vec3(1, 0.32, 0.36),0.1,&light);
@@ -25,7 +25,7 @@ Shape* plane = new Plane(glm::vec3(0, -4, -20), glm::vec3(0, 1, 0), glm::vec3(1,
 Shape* triangle = new Triangle(glm::vec3(0, 0, -5), glm::vec3(2, 0, -5), glm::vec3(1.5f, 1, -15), glm::vec3(1, 0, 0),0.1);
 Shape* ShapeArray[6];
 
-Light light(glm::vec3(0,30,-20),1);
+
 
 void Fill_Image() {
 	for (int x = 0; x < width; x++) {

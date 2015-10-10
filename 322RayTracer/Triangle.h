@@ -17,6 +17,6 @@ public:
 		CalculateNormal();
 	};
 	virtual float Intersection(glm::vec3 Origin, glm::vec3 Direction);
-	virtual glm::vec3 PhongShading();
+	virtual glm::vec3 PhongShading(float);
 	glm::vec3 CalcAmbient();
 };

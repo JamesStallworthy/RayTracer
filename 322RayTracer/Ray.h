@@ -14,6 +14,7 @@ private:
 	int width;
 	int height;
 	float Fov;
+	float t;
 public:
 	glm::vec3 Origin;
 	glm::vec3 Direction;

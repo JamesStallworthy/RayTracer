@@ -10,5 +10,5 @@ public:
 	glm::vec3 Colour;
 	float Ambient;
 	virtual float Intersection(glm::vec3 Origin, glm::vec3 Direction)=0;
-	virtual glm::vec3 PhongShading()=0;
+	virtual glm::vec3 PhongShading(float)=0;
 };

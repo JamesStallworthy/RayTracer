@@ -12,7 +12,7 @@ float Plane::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection)
 	return -1;
 }
 
-glm::vec3 Plane::PhongShading()
+glm::vec3 Plane::PhongShading(float _t)
 {
 	return CalcAmbient();;
 }
