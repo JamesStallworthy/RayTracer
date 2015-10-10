@@ -13,13 +13,13 @@ float Ray::PixelNormalized(int val,int secondVal)
 	return ((float)val + 0.5)/secondVal;
 }
 
-int Ray::CheckHit(Shape* s[])
+int Ray::CheckHit(Shape* s[], glm::vec3 _O, glm::vec3 _D)
 {
 	int LowestID=-1;
 	float LowestValue=99;
 	float temp;
 	for (int i = 0; i < AmountOfShapes; i++) {
-		temp=s[i]->Intersection(Origin, Direction);
+		temp=s[i]->Intersection(_O, _D);
 		if (temp != -1 && temp < LowestValue) {
 			LowestValue = temp;
 			LowestID = i;
@@ -48,13 +48,20 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[],int Amount)
 			WorldSpacey = RemappedY * Fov;
 			Pcameraspace = glm::vec3(WorldSpacex, WorldSpacey,-1);
 			Direction = glm::normalize(Pcameraspace - Origin);
-			int ShapeID = CheckHit(ShapeArray);
+			int ShapeID = CheckHit(ShapeArray,Origin, Direction);
 			if (ShapeID != -1) {
 				img[x][y] = ShapeArray[ShapeID]->PhongShading(t,Origin,Direction, Origin);
 			}
 		}
 
 	}//std::cout << WorldSpaceX << std::endl;
+}
+
+bool Ray::HardShadows()
+{
+	glm::vec3 ContactPoint = Origin + t*Direction;
+	glm::vec3 VecToLight;
+	return false;
 }
 
 
