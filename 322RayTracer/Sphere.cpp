@@ -16,3 +16,13 @@ float Sphere::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection) {
 	return (tca-sqrt(pow(Radius,2) - SS));
 }
 
+glm::vec3 Sphere::PhongShading()
+{
+	return CalcAmbient();;
+}
+
+glm::vec3 Sphere::CalcAmbient()
+{
+	return Colour*Ambient;
+}
+

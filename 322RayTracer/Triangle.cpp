@@ -40,3 +40,13 @@ float Triangle::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection)
 
 	return -1;
 }
+
+glm::vec3 Triangle::PhongShading()
+{
+	return CalcAmbient();;
+}
+
+glm::vec3 Triangle::CalcAmbient()
+{
+	return Colour*Ambient;
+}

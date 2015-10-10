@@ -49,7 +49,7 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[],int Amount)
 			Direction = glm::normalize(Pcameraspace - Origin);
 			int ShapeID = CheckHit(ShapeArray);
 			if (ShapeID != -1) {
-				img[x][y] = ShapeArray[ShapeID]->Colour;
+				img[x][y] = ShapeArray[ShapeID]->PhongShading();
 			}
 		}
 
