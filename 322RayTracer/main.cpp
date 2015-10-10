@@ -6,6 +6,7 @@
 #include "Sphere.h"
 #include "Plane.h"
 #include <time.h>
+#include "Triangle.h"
 
 //using namespace std;
 int width = 640;
@@ -19,7 +20,9 @@ Shape* Two = new Sphere(glm::vec3(5, -1, -15), 2, glm::vec3(0.9, 0.76, 0.46));
 Shape* Three = new Sphere(glm::vec3(5, 0, -25), 3, glm::vec3(0.65, 0.77, 0.97));
 Shape* Four = new Sphere(glm::vec3(-5.5, 0, -15), 3, glm::vec3(0.90, 0.9, 0.9));
 Shape* plane = new Plane(glm::vec3(0, -4, -20), glm::vec3(0, 1, 0), glm::vec3(1, 1, 1));
-Shape* ShapeArray[5];
+//Shape* triangle = new Triangle(glm::vec3(0, 0, -10), glm::vec3(0, 2, -10), glm::vec3(2, 0, -10), glm::vec3(1, 0, 0));
+Shape* triangle = new Triangle(glm::vec3(0, 0, -5), glm::vec3(2, 0, -5), glm::vec3(1.5f, 1, -15), glm::vec3(1, 0, 0));
+Shape* ShapeArray[6];
 
 void Fill_Image() {
 	for (int x = 0; x < width; x++) {
@@ -48,12 +51,13 @@ int main() {
 	ShapeArray[2] = Three;
 	ShapeArray[3] = Four;
 	ShapeArray[4] = plane;
+	ShapeArray[5] = triangle;
 	//fill image array
 	for (int i(0); i < width; i++) image[i] = new glm::vec3[height];
 	//Fill_Image();
 	clock_t t;
 	t = clock();
-	ray.RayCast(image, ShapeArray, 5);
+	ray.RayCast(image, ShapeArray, 6);
 	t = clock() - t;
 	std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
 	Save_Image();
