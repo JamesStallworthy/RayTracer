@@ -56,6 +56,7 @@ int main(int argc, char *argv[]) {
 	window = SDL_CreateWindow("Raycaster", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_RESIZABLE);
 	SDL_Surface *surface = SDL_GetWindowSurface(window);
 	ray.SetWindow(window, surface);
+	
 	ShapeArray[0] = One;
 	ShapeArray[1] = Two;
 	ShapeArray[2] = Three;
@@ -84,7 +85,6 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	}
-	std::cin.get();
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 	return 0;
