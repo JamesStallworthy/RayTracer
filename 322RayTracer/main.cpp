@@ -53,7 +53,7 @@ void Save_Image() {
 int main(int argc, char *argv[]) {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_Window *window;
-	window = SDL_CreateWindow("Raycaster", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_RESIZABLE);
+	window = SDL_CreateWindow("Raycaster", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, NULL);
 	SDL_Surface *surface = SDL_GetWindowSurface(window);
 	ray.SetWindow(window, surface);
 	
