@@ -54,7 +54,7 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[],int Amount)
 			Direction = glm::normalize(Pcameraspace - Origin);
 			int ShapeID = CheckHit(ShapeArray,Origin, Direction);
 			if (ShapeID != -1) {
-				ReturnedColour = (ShapeArray[ShapeID]->PhongShading(t, Origin, Direction, Origin));// *HardShadows(ShapeArray, ShapeID);
+				ReturnedColour = (ShapeArray[ShapeID]->PhongShading(t, Origin, Direction, Origin)) *HardShadows(ShapeArray, ShapeID);
 				img[x][y] = ReturnedColour;
 				DrawToScreen(ReturnedColour, x,y);
 			}
@@ -67,7 +67,7 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[],int Amount)
 float Ray::HardShadows(Shape* ShapeArray[], int CurrentShape)
 {
 	float newt = t - 0.1;
-	glm::vec3 ContactPoint = Origin + newt*Direction;
+	glm::vec3 ContactPoint = (Origin) + t*Direction;
 	glm::vec3 VecToLight = light->Position - ContactPoint ;
 	int HitObject = CheckHit(ShapeArray, ContactPoint, VecToLight);
 	if (HitObject == -1 ||HitObject == CurrentShape)
