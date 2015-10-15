@@ -14,20 +14,18 @@ float Ray::PixelNormalized(int val,int secondVal)
 	return ((float)val + 0.5)/secondVal;
 }
 
-int Ray::CheckHit(Shape* s[], glm::vec3 _O, glm::vec3 _D)
+Intersect Ray::CheckHit(Shape* SArray[], glm::vec3 _O, glm::vec3 _D)
 {
-	int LowestID=-1;
-	float LowestValue=99;
-	float temp;
+	Intersect TempInt(0, glm::vec3(0, 0, 0));
+	Intersect LowestIntersect(99, glm::vec3(0, 0, 0));
 	for (int i = 0; i < AmountOfShapes; i++) {
-		temp=s[i]->Intersection(_O, _D);
-		if (temp != -1 && temp < LowestValue) {
-			LowestValue = temp;
-			LowestID = i;
+		TempInt = SArray[i]->Intersection(_O, _D);
+		if (TempInt.Distance != -1 && TempInt.Distance < LowestIntersect.Distance) {
+			LowestIntersect = TempInt;
+			LowestIntersect.ObjectID = i;
 		}
 	}
-	t = LowestValue;
-	return LowestID;
+	return LowestIntersect;
 }
 
 
@@ -43,6 +41,7 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[],int Amount)
 	float WorldSpacex;
 	float WorldSpacey;
 	glm::vec3 Pcameraspace; 
+	Intersect intersection(0,glm::vec3(0,0,0));
 	
 	for (int x = 0; x < width; x++) {
 		for (int y = 0; y < height; y++) {
@@ -52,9 +51,10 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[],int Amount)
 			WorldSpacey = RemappedY * Fov;
 			Pcameraspace = glm::vec3(WorldSpacex, WorldSpacey,-1);
 			Direction = glm::normalize(Pcameraspace - Origin);
-			int ShapeID = CheckHit(ShapeArray,Origin, Direction);
+			intersection = CheckHit(ShapeArray,Origin, Direction);
+			int ShapeID = intersection.ObjectID;
 			if (ShapeID != -1) {
-				ReturnedColour = (ShapeArray[ShapeID]->PhongShading(t, Origin, Direction, Origin)) *HardShadows(ShapeArray, ShapeID);
+				ReturnedColour = (ShapeArray[ShapeID]->PhongShading(intersection.Distance, Origin, Direction, Origin)) * HardShadows(ShapeArray, intersection);
 				img[x][y] = ReturnedColour;
 				DrawToScreen(ReturnedColour, x,y);
 			}
@@ -64,13 +64,14 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[],int Amount)
 	SDL_UpdateWindowSurface(window);
 }
 
-float Ray::HardShadows(Shape* ShapeArray[], int CurrentShape)
+float Ray::HardShadows(Shape* ShapeArray[], Intersect i)
 {
-	float newt = t - 0.1;
-	glm::vec3 ContactPoint = (Origin) + t*Direction;
-	glm::vec3 VecToLight = light->Position - ContactPoint ;
-	int HitObject = CheckHit(ShapeArray, ContactPoint, VecToLight);
-	if (HitObject == -1 ||HitObject == CurrentShape)
+	glm::vec3 ContactPoint = (Origin+(i.Normal*0.0001f)) + i.Distance*Direction;
+	glm::vec3 VecToLight = glm::normalize(light->Position - ContactPoint);
+
+	//Intesection
+	Intersect intersect = CheckHit(ShapeArray, ContactPoint, VecToLight);;
+	if (intersect.ObjectID == -1 || intersect.ObjectID == i.ObjectID)
 		return 1;
 	else
 		return 0.5;

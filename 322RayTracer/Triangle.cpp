@@ -9,7 +9,7 @@ void Triangle::CalculateNormal()
 
 }
 
-float Triangle::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection)
+Intersect Triangle::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection)
 {
 	//Plane intersection equal to the plane the triangle is on
 	glm::vec3 p;
@@ -28,17 +28,17 @@ float Triangle::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection)
 
 			//checking if p is inside triangle
 			if (u < 0 || u > 1) {
-				return -1;
+				return Intersect(-1,Normal);
 			}
 			if (v < 0 || (u + v)>1)
-				return -1;
+				return Intersect(-1, Normal);
 			else {
-				return t;
+				return Intersect(t,Normal);
 			}
 		}
 	}
 
-	return -1;
+	return Intersect(-1,Normal);
 }
 
 glm::vec3 Triangle::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirection, glm::vec3 CameraPos)

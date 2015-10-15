@@ -2,6 +2,7 @@
 #include <iostream>
 #include <glm.hpp>
 #include "Light.h"
+#include "Intersect.h"
 
 class Shape
 {
@@ -13,7 +14,7 @@ public:
 		Colour(_Colour), Ambient(_Ambient), Specular(_Specular), light(_light) {};
 	glm::vec3 Colour;
 	
-	virtual float Intersection(glm::vec3 Origin, glm::vec3 Direction)=0;
+	virtual Intersect Intersection(glm::vec3 Origin, glm::vec3 Direction)=0;
 	virtual glm::vec3 PhongShading(float, glm::vec3, glm::vec3, glm::vec3) = 0;
 	glm::vec3 CalcAmbient();
 	glm::vec3 CalcDiffuse(glm::vec3 l, glm::vec3 n);

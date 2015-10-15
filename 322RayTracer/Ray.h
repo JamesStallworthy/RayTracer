@@ -11,12 +11,13 @@ class Ray
 private:
 	float PixelNormalized(int val,int secondVal);
 	float ImageAspectRatio;
-	int CheckHit(Shape* s[],glm::vec3 _O,glm::vec3 _D);
+	Intersect CheckHit(Shape* s[],glm::vec3 _O,glm::vec3 _D);
 	int AmountOfShapes;
 	int width;
 	int height;
 	float Fov;
 	float t;
+	glm::vec3 Normal;
 	Light* light;
 	SDL_Window *window;
 	SDL_Surface *surface;
@@ -27,7 +28,7 @@ public:
 	glm::vec3 Direction;
 	Ray::Ray(float, int, int, Light*);
 	void RayCast(glm::vec3**, Shape*[],int Amount);
-	float HardShadows(Shape*[], int);
+	float HardShadows(Shape*[], Intersect);
 	void SetWindow(SDL_Window *_window, SDL_Surface *surface);
 	void DrawToScreen(glm::vec3 _Colour, int x, int y);
 };

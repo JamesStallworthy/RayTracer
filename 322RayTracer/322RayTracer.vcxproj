@@ -137,6 +137,7 @@
     <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Intersect.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Ray.h" />
