@@ -1,7 +1,7 @@
-#include "Plane.h"
+#include "PlaneInf.h"
 #include "math.h"
 
-Intersect Plane::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection)
+Intersect PlaneInf::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection)
 {
 	float denominator = glm::dot(RDirection, Normal);
 	if (abs(denominator) > 0.000001) {
@@ -12,7 +12,7 @@ Intersect Plane::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection)
 	return Intersect(-1, Normal);
 }
 
-glm::vec3 Plane::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirection, glm::vec3 CameraPos)
+glm::vec3 PlaneInf::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirection, glm::vec3 CameraPos)
 {
 	glm::vec3 ContactPoint = ROrigin + _t*RDirection;
 	glm::vec3 l = glm::normalize(light->Position - ContactPoint);

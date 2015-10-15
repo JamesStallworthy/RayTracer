@@ -4,7 +4,7 @@
 #include "Shape.h"
 #include "Ray.h"
 #include "Sphere.h"
-#include "Plane.h"
+#include "PlaneInf.h"
 #include <time.h>
 #include "Triangle.h"
 #include "Light.h"
@@ -21,7 +21,7 @@ Shape* One = new Sphere(glm::vec3(0, 0, -20), 4, glm::vec3(1, 0.32, 0.36),0.1,10
 Shape* Two = new Sphere(glm::vec3(5, -1, -15), 2, glm::vec3(0.9, 0.76, 0.46),0.1,10,&light);
 Shape* Three = new Sphere(glm::vec3(5, 0, -25), 3, glm::vec3(0.65, 0.77, 0.97),0.1,10, &light);
 Shape* Four = new Sphere(glm::vec3(-5.5, 0, -15), 3, glm::vec3(0.90, 0.9, 0.9),0.1,10, &light);
-Shape* plane = new Plane(glm::vec3(0, -4, -20), glm::vec3(0, 1, 0), glm::vec3(1, 1, 1),0.1,10, &light);
+Shape* plane = new PlaneInf(glm::vec3(0, -4, -20), glm::vec3(0, 1, 0), glm::vec3(1, 1, 1),0.1,10, &light);
 //Shape* plane2 = new Plane(glm::vec3(0, -1, 0), glm::vec3(-1, -5, 0), glm::vec3(0, 1, 1), 0.1,10, &light);
 //Shape* triangle = new Triangle(glm::vec3(0, 0, -10), glm::vec3(0, 2, -10), glm::vec3(2, 0, -10), glm::vec3(1, 0, 0), 0.1, &light);
 Shape* triangle = new Triangle(glm::vec3(0, -1, -5), glm::vec3(2, -1, -5), glm::vec3(1, -1, -15), glm::vec3(1, 0, 0),0.1,10,&light);
