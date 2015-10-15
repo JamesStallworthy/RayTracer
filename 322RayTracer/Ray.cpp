@@ -18,7 +18,7 @@ float Ray::PixelNormalized(int val,int secondVal)
 Intersect Ray::CheckHit(Shape* SArray[], glm::vec3 _O, glm::vec3 _D)
 {
 	Intersect TempInt(0, glm::vec3(0, 0, 0));
-	Intersect LowestIntersect(99, glm::vec3(0, 0, 0));
+	Intersect LowestIntersect(99999, glm::vec3(0, 0, 0));
 	for (int i = 0; i < AmountOfShapes; i++) {
 		TempInt = SArray[i]->Intersection(_O, _D);
 		if (TempInt.Distance != -1 && TempInt.Distance < LowestIntersect.Distance) {
@@ -55,7 +55,7 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 
 			intersection = CheckHit(ShapeArray,Origin, Direction);
 			if (intersection.ObjectID != -1) {
-				if (HardShadows(ShapeArray, intersection))
+				if (!HardShadows(ShapeArray, intersection))
 					ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction, Origin));
 				else
 					ReturnedColour = ShapeArray[intersection.ObjectID]->CalcAmbient();
@@ -72,13 +72,13 @@ bool Ray::HardShadows(Shape* _ShapeArray[], Intersect i)
 {
 	glm::vec3 ContactPoint = Origin+ i.Distance*Direction;
 	glm::vec3 VecToLight = glm::normalize(light->Position - ContactPoint);
-
+	//Behind Camera Check
 	//Intesection
 	Intersect intersect = CheckHit(_ShapeArray, ContactPoint + i.Normal*0.001f, VecToLight);
 	if (intersect.ObjectID == -1 || intersect.ObjectID == i.ObjectID)
-		return true;
-	else
 		return false;
+	else
+		return true;
 }
 
 void Ray::SetWindow(SDL_Window * _window, SDL_Surface * _surface)
