@@ -131,6 +131,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="Poly.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Sphere.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="Intersect.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Plane.h" />
+    <ClInclude Include="Poly.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="Sphere.h" />
