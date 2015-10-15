@@ -9,13 +9,13 @@
 #include "Triangle.h"
 #include "Light.h"
 #include <SDL.h>
-
+SDL_Event event;
 //using namespace std;
 int width = 640;
 int height = 480;
 glm::vec3 **image = new glm::vec3*[width];
-Light light(glm::vec3(1,10,-2),1);
-Ray ray(90, width, height, &light);
+Light light(glm::vec3(1,30,-5),1);
+Ray ray(90, width, height, &light,6);
 //Sphere One(glm::vec3(0, 0, -20), 4, glm::vec3(0, 0, 1));
 Shape* One = new Sphere(glm::vec3(0, 0, -20), 4, glm::vec3(1, 0.32, 0.36),0.1,10,&light);
 Shape* Two = new Sphere(glm::vec3(5, -1, -15), 2, glm::vec3(0.9, 0.76, 0.46),0.1,10,&light);
@@ -50,6 +50,30 @@ void Save_Image() {
 	ofs.close();
 }
 
+bool Controls() {
+
+	if (SDL_PollEvent(&event)) {
+		if (event.type == SDL_QUIT) {
+			return false;
+		}
+		if (event.type == SDL_KEYDOWN) {
+			switch (event.key.keysym.sym) {
+			case SDLK_ESCAPE:
+				return false;
+				break;
+			case SDLK_a:
+				ray.Origin.x--;
+				break;
+			case SDLK_d:
+				ray.Origin.x++;
+				break;
+			}
+		}
+	}
+
+}
+
+
 int main(int argc, char *argv[]) {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_Window *window;
@@ -69,22 +93,22 @@ int main(int argc, char *argv[]) {
 	//Fill_Image();
 	clock_t t;
 	t = clock();
-	ray.RayCast(image, ShapeArray, 6);
+	ray.RayCast(image, ShapeArray);
 	t = clock() - t;
 	std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
-	Save_Image();
 
 	bool Display = true;
 	
-	SDL_Event event;
 	while (Display) {
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT) {
-				Display = false;
-				break;
-			}
-		}
+		//Of Controls returns false close program
+		Display = Controls();
+		t = clock();
+		ray.RayCast(image, ShapeArray);
+		t = clock() - t;
+		//std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
+		//std::cout << Display << std::endl;
 	}
+	Save_Image();
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 	return 0;
