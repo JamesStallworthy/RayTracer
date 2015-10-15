@@ -72,7 +72,6 @@ bool Ray::HardShadows(Shape* _ShapeArray[], Intersect i)
 {
 	glm::vec3 ContactPoint = Origin+ i.Distance*Direction;
 	glm::vec3 VecToLight = glm::normalize(light->Position - ContactPoint);
-	//Behind Camera Check
 	//Intesection
 	Intersect intersect = CheckHit(_ShapeArray, ContactPoint + i.Normal*0.001f, VecToLight);
 	if (intersect.ObjectID == -1 || intersect.ObjectID == i.ObjectID)

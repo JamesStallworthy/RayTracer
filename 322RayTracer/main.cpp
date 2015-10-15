@@ -100,8 +100,7 @@ int main(int argc, char *argv[]) {
 		t = clock();
 		ray.RayCast(image, ShapeArray);
 		t = clock() - t;
-		//std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
-		//std::cout << Display << std::endl;
+		std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
 	}
 	Save_Image();
 	SDL_DestroyWindow(window);
