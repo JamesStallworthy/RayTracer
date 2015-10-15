@@ -32,7 +32,9 @@ Intersect Ray::CheckHit(Shape* SArray[], glm::vec3 _O, glm::vec3 _D)
 
 void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 {
-	//SDL
+	//SDL clear screen
+	SDL_FillRect(surface, NULL, 0x000000);
+	//Pixel Colour
 	glm::vec3 ReturnedColour;
 	
 	float RemappedX;//Normalised x of pixel
@@ -48,7 +50,7 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 			RemappedY = (1 -2*PixelNormalized(y,height));
 			WorldSpacex = RemappedX * Fov;
 			WorldSpacey = RemappedY * Fov;
-			Pcameraspace = glm::vec3(WorldSpacex, WorldSpacey,-1);
+			Pcameraspace = glm::vec3(WorldSpacex+ Origin.x, WorldSpacey + Origin.y,-1+Origin.z);
 			Direction = glm::normalize(Pcameraspace - Origin);
 
 			intersection = CheckHit(ShapeArray,Origin, Direction);

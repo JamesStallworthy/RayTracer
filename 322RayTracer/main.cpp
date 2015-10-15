@@ -9,7 +9,7 @@
 #include "Triangle.h"
 #include "Light.h"
 #include <SDL.h>
-
+SDL_Event event;
 //using namespace std;
 int width = 640;
 int height = 480;
@@ -49,6 +49,28 @@ void Save_Image() {
 	}
 	ofs.close();
 }
+bool Controls() {
+
+	if (SDL_PollEvent(&event)) {
+		if (event.type == SDL_QUIT) {
+			return false;
+		}
+		if (event.type == SDL_KEYDOWN) {
+			switch (event.key.keysym.sym) {
+			case SDLK_ESCAPE:
+				return false;
+				break;
+			case SDLK_a:
+				ray.Origin.x--;
+				break;
+			case SDLK_d:
+				ray.Origin.x++;
+				break;
+			}
+		}
+	}
+
+}
 
 int main(int argc, char *argv[]) {
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -66,25 +88,21 @@ int main(int argc, char *argv[]) {
 	//ShapeArray[6] = plane2;
 	//fill image array
 	for (int i(0); i < width; i++) image[i] = new glm::vec3[height];
-	//Fill_Image();
 	clock_t t;
-	t = clock();
-	ray.RayCast(image, ShapeArray);
-	t = clock() - t;
-	std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
-	Save_Image();
 
 	bool Display = true;
 	
 	SDL_Event event;
 	while (Display) {
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT) {
-				Display = false;
-				break;
-			}
-		}
+		//Of Controls returns false close program
+		Display = Controls();
+		t = clock();
+		ray.RayCast(image, ShapeArray);
+		t = clock() - t;
+		//std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
+		//std::cout << Display << std::endl;
 	}
+	Save_Image();
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 	return 0;
