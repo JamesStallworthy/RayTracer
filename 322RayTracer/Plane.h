@@ -2,12 +2,12 @@
 #include "Shape.h"
 #include "light.h"
 
-class PlaneInf : public Shape {
+class Plane : public Shape {
 public:
 	glm::vec3 Origin;
 	glm::vec3 Normal;
 	//Light* light;
-	PlaneInf(glm::vec3 o, glm::vec3 n, glm::vec3 c, float _Ambient,float _Specular, Light* _light) :
+	Plane(glm::vec3 o, glm::vec3 n, glm::vec3 c, float _Ambient,float _Specular, Light* _light) :
 		Shape(c,_Ambient,_Specular,_light), Origin(o)
 	{
 		Normal = glm::normalize(n);

@@ -1,12 +1,13 @@
 #include "Ray.h"
 #include <math.h>
-Ray::Ray(float _Fov, int ScreenWidth, int ScreenHeight,Light* _light) {
+Ray::Ray(float _Fov, int ScreenWidth, int ScreenHeight,Light* _light, int _Amount) {
 	Origin = glm::vec3(0,0,0);
 	width = ScreenWidth;
 	height = ScreenHeight;
 	ImageAspectRatio = float(width) / float(height);
 	Fov = tan((_Fov * 3.14 / 180) / 2);
 	light = _light;
+	AmountOfShapes = _Amount;
 }
 
 float Ray::PixelNormalized(int val,int secondVal)
@@ -29,12 +30,10 @@ Intersect Ray::CheckHit(Shape* SArray[], glm::vec3 _O, glm::vec3 _D)
 }
 
 
-void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[],int Amount)
+void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 {
 	//SDL
 	glm::vec3 ReturnedColour;
-
-	AmountOfShapes = Amount;
 	
 	float RemappedX;//Normalised x of pixel
 	float RemappedY;//Normalised y of pixel
@@ -53,9 +52,11 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[],int Amount)
 			Direction = glm::normalize(Pcameraspace - Origin);
 
 			intersection = CheckHit(ShapeArray,Origin, Direction);
-			int ShapeID = intersection.ObjectID;
-			if (ShapeID != -1) {
-				ReturnedColour = (ShapeArray[ShapeID]->PhongShading(intersection.Distance, Origin, Direction, Origin)) * HardShadows(ShapeArray, intersection);
+			if (intersection.ObjectID != -1) {
+				if (HardShadows(ShapeArray, intersection))
+					ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction, Origin));
+				else
+					ReturnedColour = ShapeArray[intersection.ObjectID]->CalcAmbient();
 				img[x][y] = ReturnedColour;
 				DrawToScreen(ReturnedColour, x,y);
 			}
@@ -65,7 +66,7 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[],int Amount)
 	SDL_UpdateWindowSurface(window);
 }
 
-float Ray::HardShadows(Shape* _ShapeArray[], Intersect i)
+bool Ray::HardShadows(Shape* _ShapeArray[], Intersect i)
 {
 	glm::vec3 ContactPoint = Origin+ i.Distance*Direction;
 	glm::vec3 VecToLight = glm::normalize(light->Position - ContactPoint);
@@ -73,9 +74,9 @@ float Ray::HardShadows(Shape* _ShapeArray[], Intersect i)
 	//Intesection
 	Intersect intersect = CheckHit(_ShapeArray, ContactPoint + i.Normal*0.001f, VecToLight);
 	if (intersect.ObjectID == -1 || intersect.ObjectID == i.ObjectID)
-		return 1;
+		return true;
 	else
-		return 0.2;
+		return false;
 }
 
 void Ray::SetWindow(SDL_Window * _window, SDL_Surface * _surface)

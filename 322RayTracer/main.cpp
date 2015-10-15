@@ -4,7 +4,7 @@
 #include "Shape.h"
 #include "Ray.h"
 #include "Sphere.h"
-#include "PlaneInf.h"
+#include "Plane.h"
 #include <time.h>
 #include "Triangle.h"
 #include "Light.h"
@@ -15,13 +15,13 @@ int width = 640;
 int height = 480;
 glm::vec3 **image = new glm::vec3*[width];
 Light light(glm::vec3(1,10,-2),1);
-Ray ray(90, width, height, &light);
+Ray ray(90, width, height, &light, 6);
 //Sphere One(glm::vec3(0, 0, -20), 4, glm::vec3(0, 0, 1));
 Shape* One = new Sphere(glm::vec3(0, 0, -20), 4, glm::vec3(1, 0.32, 0.36),0.1,10,&light);
 Shape* Two = new Sphere(glm::vec3(5, -1, -15), 2, glm::vec3(0.9, 0.76, 0.46),0.1,10,&light);
 Shape* Three = new Sphere(glm::vec3(5, 0, -25), 3, glm::vec3(0.65, 0.77, 0.97),0.1,10, &light);
 Shape* Four = new Sphere(glm::vec3(-5.5, 0, -15), 3, glm::vec3(0.90, 0.9, 0.9),0.1,10, &light);
-Shape* plane = new PlaneInf(glm::vec3(0, -4, -20), glm::vec3(0, 1, 0), glm::vec3(1, 1, 1),0.1,10, &light);
+Shape* plane = new Plane(glm::vec3(0, -4, -20), glm::vec3(0, 1, 0), glm::vec3(1, 1, 1),0.1,10, &light);
 //Shape* plane2 = new Plane(glm::vec3(0, -1, 0), glm::vec3(-1, -5, 0), glm::vec3(0, 1, 1), 0.1,10, &light);
 //Shape* triangle = new Triangle(glm::vec3(0, 0, -10), glm::vec3(0, 2, -10), glm::vec3(2, 0, -10), glm::vec3(1, 0, 0), 0.1, &light);
 Shape* triangle = new Triangle(glm::vec3(0, -1, -5), glm::vec3(2, -1, -5), glm::vec3(1, -1, -15), glm::vec3(1, 0, 0),0.1,10,&light);
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
 	//Fill_Image();
 	clock_t t;
 	t = clock();
-	ray.RayCast(image, ShapeArray, 6);
+	ray.RayCast(image, ShapeArray);
 	t = clock() - t;
 	std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
 	Save_Image();
