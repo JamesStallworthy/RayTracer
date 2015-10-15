@@ -26,9 +26,9 @@ private:
 public:
 	glm::vec3 Origin;
 	glm::vec3 Direction;
-	Ray::Ray(float, int, int, Light*, int);
-	void RayCast(glm::vec3**, Shape*[]);
-	bool HardShadows(Shape*[], Intersect);
+	Ray::Ray(float, int, int, Light*);
+	void RayCast(glm::vec3**, Shape*[],int Amount);
+	float HardShadows(Shape*[], Intersect);
 	void SetWindow(SDL_Window *_window, SDL_Surface *surface);
 	void DrawToScreen(glm::vec3 _Colour, int x, int y);
 };
