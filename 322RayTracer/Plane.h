@@ -14,7 +14,7 @@ public:
 	};
 
 	virtual Intersect Intersection(glm::vec3 Origin, glm::vec3 Direction);
-	virtual glm::vec3 PhongShading(float, glm::vec3, glm::vec3, glm::vec3);
+	virtual glm::vec3 PhongShading(float, glm::vec3, glm::vec3);
 	/*glm::vec3 CalcAmbient();
 	glm::vec3 CalcDiffuse(glm::vec3 l, glm::vec3 n);
 	glm::vec3 CalcSpecular(glm::vec3 l, glm::vec3 n, glm::vec3 CameraPos, glm::vec3 ContactPoint);*/
