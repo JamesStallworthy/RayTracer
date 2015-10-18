@@ -73,6 +73,18 @@ bool Controls() {
 
 }
 
+void fillImageArray() {
+	//fill image array
+	for (int i = 0; i < width; i++) image[i] = new glm::vec3[height];
+}
+
+void clearImageArray() {
+	//fill image array
+	for (int x = 0; x < width; x++)
+		for (int y = 0; y < height; y++)
+			image[x][y] = glm::vec3(0, 0, 0);
+}
+
 int main(int argc, char *argv[]) {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_Window *window;
@@ -87,17 +99,16 @@ int main(int argc, char *argv[]) {
 	ShapeArray[4] = plane;
 	ShapeArray[5] = triangle;
 	ShapeArray[6] = poly;
-	//fill image array
-	for (int i(0); i < width; i++) image[i] = new glm::vec3[height];
 	clock_t t;
 
 	bool Display = true;
-	
+	fillImageArray();
 	SDL_Event event;
 	while (Display) {
 		//Of Controls returns false close program
 		Display = Controls();
 		t = clock();
+		clearImageArray();
 		ray.RayCast(image, ShapeArray);
 		t = clock() - t;
 		std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
