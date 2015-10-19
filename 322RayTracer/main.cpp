@@ -15,8 +15,8 @@ SDL_Event event;
 int width = 640;
 int height = 480;
 glm::vec3 **image = new glm::vec3*[width];
-Light light(glm::vec3(1,4,0),1);
-Ray ray(90, width, height, &light, 7);
+Light light(glm::vec3(0,10,0),1);
+Ray ray(80, width, height, &light, 7);
 //Sphere One(glm::vec3(0, 0, -20), 4, glm::vec3(0, 0, 1));
 Shape* One = new Sphere(glm::vec3(0, 0, -20), 4, glm::vec3(1, 0.32, 0.36),0.1,100,&light);
 Shape* Two = new Sphere(glm::vec3(5, -1, -15), 2, glm::vec3(0.9, 0.76, 0.46),0.1,100,&light);
@@ -57,16 +57,20 @@ bool Controls() {
 			return false;
 		}
 		if (event.type == SDL_KEYDOWN) {
-			switch (event.key.keysym.sym) {
-			case SDLK_ESCAPE:
+			if (event.key.keysym.sym==SDLK_ESCAPE){
 				return false;
-				break;
-			case SDLK_a:
+			}
+			else if(event.key.keysym.sym == SDLK_a) {
 				ray.Origin.x--;
-				break;
-			case SDLK_d:
+			}
+			else if (event.key.keysym.sym == SDLK_d) {
 				ray.Origin.x++;
-				break;
+			}
+			else if (event.key.keysym.sym == SDLK_w) {
+				ray.Origin.z--;
+			}
+			else if (event.key.keysym.sym == SDLK_s) {
+				ray.Origin.z++;
 			}
 		}
 	}
