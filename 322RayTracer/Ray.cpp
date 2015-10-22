@@ -71,7 +71,8 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction));
 					}
 					else {
-						ReturnedColour = ShapeArray[intersection.ObjectID]->CalcAmbient() *AverageSoftShadow;
+						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction)) * (1 - AverageSoftShadow);
+						//ReturnedColour = ShapeArray[intersection.ObjectID]->Colour * (1 -AverageSoftShadow);
 					}
 
 				}
@@ -114,13 +115,13 @@ float Ray::SoftShadows(Shape * _ShapeArray[], Intersect i)
 	float average = 0;
 	glm::vec3 ContactPoint = Origin + i.Distance*Direction;
 	glm::vec3 VecToLight;
-	//for (int z = 0; z < 9; z++) {
+	for (int z = 0; z < 64; z++) {
 	VecToLight = glm::normalize(RandomPointInAreaLight() - ContactPoint);
 	Intersect intersect = CheckHit(_ShapeArray, ContactPoint + i.Normal*0.001f, VecToLight);
 	if (intersect.ObjectID == -1 || intersect.ObjectID == i.ObjectID)
-		return 0;
-	//}
-	return 1;
+		average ++;
+	}
+	return 1- (average/64);
 }
 
 glm::vec3 Ray::RandomPointInAreaLight()
