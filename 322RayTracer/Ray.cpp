@@ -1,12 +1,13 @@
 #include "Ray.h"
 #include <math.h>
-Ray::Ray(float _Fov, int ScreenWidth, int ScreenHeight,Light* _light, int _Amount) {
+Ray::Ray(float _Fov, int ScreenWidth, int ScreenHeight,Light* _light, AreaLight* _arealight, int _Amount) {
 	Origin = glm::vec3(0,0,0);
 	width = ScreenWidth;
 	height = ScreenHeight;
 	ImageAspectRatio = float(width) / float(height);
 	Fov = tan((_Fov * 3.14 / 180) / 2);
 	light = _light;
+	arealight = _arealight;
 	AmountOfShapes = _Amount;
 }
 
@@ -55,13 +56,29 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 
 			intersection = CheckHit(ShapeArray,Origin, Direction);
 			if (intersection.ObjectID != -1) {
-				if (!HardShadows(ShapeArray, intersection))
-					ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction));
-				else
-					ReturnedColour = ShapeArray[intersection.ObjectID]->CalcAmbient();
+				if (light != NULL) {
+					//HARD SHADOWS
+					std::cout << "Hard Shadows" << std::endl;
+					if (!HardShadows(ShapeArray, intersection))
+						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction));
+					else
+						ReturnedColour = ShapeArray[intersection.ObjectID]->CalcAmbient();
+				}
+				else {
+					//SOFT SHADOWS
+					float AverageSoftShadow = SoftShadows(ShapeArray, intersection);
+					if (AverageSoftShadow == 0) {
+						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction));
+					}
+					else {
+						ReturnedColour = ShapeArray[intersection.ObjectID]->CalcAmbient() *AverageSoftShadow;
+					}
+
+				}
 				img[x][y] = ReturnedColour;
 				DrawToScreen(ReturnedColour, x,y);
 			}
+
 		}
 
 	}//std::cout << WorldSpaceX << std::endl;
@@ -78,6 +95,39 @@ bool Ray::HardShadows(Shape* _ShapeArray[], Intersect i)
 		return false;
 	else
 		return true;
+}
+
+//float Ray::SoftShadows(Shape* _ShapeArray[], Intersect i)
+//{
+//	glm::vec3 ContactPoint = Origin + i.Distance*Direction;
+//	glm::vec3 VecToLight = glm::normalize(arealight->position - ContactPoint);
+//	//Intesection
+//	Intersect intersect = CheckHit(_ShapeArray, ContactPoint + i.Normal*0.001f, VecToLight);
+//	if (intersect.ObjectID == -1 || intersect.ObjectID == i.ObjectID)
+//		return 1;
+//	else
+//		return 0;
+//}
+
+float Ray::SoftShadows(Shape * _ShapeArray[], Intersect i)
+{
+	float average = 0;
+	glm::vec3 ContactPoint = Origin + i.Distance*Direction;
+	glm::vec3 VecToLight;
+	//for (int z = 0; z < 9; z++) {
+	VecToLight = glm::normalize(RandomPointInAreaLight() - ContactPoint);
+	Intersect intersect = CheckHit(_ShapeArray, ContactPoint + i.Normal*0.001f, VecToLight);
+	if (intersect.ObjectID == -1 || intersect.ObjectID == i.ObjectID)
+		return 0;
+	//}
+	return 1;
+}
+
+glm::vec3 Ray::RandomPointInAreaLight()
+{
+	float x = arealight->position.x + arealight->radius * cos(rand());
+	float z = arealight->position.z + arealight->radius * sin(rand());
+	return glm::vec3(x, arealight->position.y, z);
 }
 
 void Ray::SetWindow(SDL_Window * _window, SDL_Surface * _surface)

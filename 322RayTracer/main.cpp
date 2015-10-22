@@ -10,13 +10,15 @@
 #include "Triangle.h"
 #include "Light.h"
 #include <SDL.h>
+#include "AreaLight.h"
 SDL_Event event;
 //using namespace std;
 int width = 640;
 int height = 480;
 glm::vec3 **image = new glm::vec3*[width];
 Light light(glm::vec3(0,10,0),1);
-Ray ray(80, width, height, &light, 7);
+AreaLight arealight(glm::vec3(0, 10, 0), 3, 1);
+Ray ray(80, width, height, NULL, &arealight, 7);
 //Sphere One(glm::vec3(0, 0, -20), 4, glm::vec3(0, 0, 1));
 Shape* One = new Sphere(glm::vec3(0, 0, -20), 4, glm::vec3(1, 0.32, 0.36),0.1,100,&light);
 Shape* Two = new Sphere(glm::vec3(5, -1, -15), 2, glm::vec3(0.9, 0.76, 0.46),0.1,100,&light);
@@ -27,8 +29,6 @@ Shape* plane2 = new Plane(glm::vec3(0, 6, -20), glm::vec3(0, 1, 0), glm::vec3(0,
 Shape* poly = new Poly(glm::vec3(0, 1, -5), glm::vec3(1, 1, -5), glm::vec3(0, 0, -5), glm::vec3(1, 0, -5), glm::vec3(1, 1, 1), 0.1, 100, &light);
 Shape* triangle = new Triangle(glm::vec3(0, -1, -5), glm::vec3(2, -1, -5), glm::vec3(1, -1, -15), glm::vec3(1, 0, 0),0.1,100,&light);
 Shape* ShapeArray[8];
-
-
 
 void Fill_Image() {
 	for (int x = 0; x < width; x++) {
