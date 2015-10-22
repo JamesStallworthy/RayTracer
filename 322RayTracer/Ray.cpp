@@ -126,8 +126,9 @@ float Ray::SoftShadows(Shape * _ShapeArray[], Intersect i)
 
 glm::vec3 Ray::RandomPointInAreaLight()
 {
-	float x = arealight->position.x + arealight->radius * cos(rand());
-	float z = arealight->position.z + arealight->radius * sin(rand());
+	int rad = (arealight->radius)*10;
+	float x = arealight->position.x + ((rand()%rad)/10) * cos(rand());
+	float z = arealight->position.z + ((rand() % rad) / 10) * sin(rand());
 	return glm::vec3(x, arealight->position.y, z);
 }
 
