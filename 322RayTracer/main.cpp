@@ -12,14 +12,15 @@
 #include <SDL.h>
 #include "AreaLight.h"
 SDL_Event event;
-//using namespace std;
+clock_t t;
+
 int width = 640;
 int height = 480;
+
 glm::vec3 **image = new glm::vec3*[width];
 Light light(glm::vec3(0,10,0),1);
-AreaLight arealight(glm::vec3(0, 10, 0), 5, 1, 64);
+AreaLight arealight(glm::vec3(0, 10, 0), 5, 1, 16);
 Ray ray(80, width, height, NULL, &arealight, 8);
-//Sphere One(glm::vec3(0, 0, -20), 4, glm::vec3(0, 0, 1));
 Shape* One = new Sphere(glm::vec3(0, 0, -20), 4, glm::vec3(1, 0.32, 0.36),0.1,100);
 Shape* Two = new Sphere(glm::vec3(5, -1, -15), 2, glm::vec3(0.9, 0.76, 0.46),0.1,100);
 Shape* Three = new Sphere(glm::vec3(5, 0, -25), 3, glm::vec3(0.65, 0.77, 0.97),0.1,100);
@@ -50,32 +51,6 @@ void Save_Image() {
 	}
 	ofs.close();
 }
-bool Controls() {
-
-	if (SDL_PollEvent(&event)) {
-		if (event.type == SDL_QUIT) {
-			return false;
-		}
-		if (event.type == SDL_KEYDOWN) {
-			if (event.key.keysym.sym==SDLK_ESCAPE){
-				return false;
-			}
-			else if(event.key.keysym.sym == SDLK_a) {
-				ray.Origin.x--;
-			}
-			else if (event.key.keysym.sym == SDLK_d) {
-				ray.Origin.x++;
-			}
-			else if (event.key.keysym.sym == SDLK_w) {
-				ray.Origin.z--;
-			}
-			else if (event.key.keysym.sym == SDLK_s) {
-				ray.Origin.z++;
-			}
-		}
-	}
-
-}
 
 void fillImageArray() {
 	//fill image array
@@ -87,6 +62,42 @@ void clearImageArray() {
 	for (int x = 0; x < width; x++)
 		for (int y = 0; y < height; y++)
 			image[x][y] = glm::vec3(0, 0, 0);
+}
+
+void render() {
+	t = clock();
+	clearImageArray();
+	ray.RayCast(image, ShapeArray);
+	t = clock() - t;
+	std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
+}
+
+bool Controls() {
+
+	if (SDL_PollEvent(&event)) {
+		if (event.type == SDL_QUIT) {
+			return false;
+		}
+		if (event.type == SDL_KEYDOWN) {
+			if(event.key.keysym.sym == SDLK_a) {
+				ray.Origin.x--;
+				render();
+			}
+			else if (event.key.keysym.sym == SDLK_d) {
+				ray.Origin.x++;
+				render();
+			}
+			else if (event.key.keysym.sym == SDLK_w) {
+				ray.Origin.z--;
+				render();
+			}
+			else if (event.key.keysym.sym == SDLK_s) {
+				ray.Origin.z++;
+				render();
+			}
+		}
+	}
+
 }
 
 int main(int argc, char *argv[]) {
@@ -104,19 +115,15 @@ int main(int argc, char *argv[]) {
 	ShapeArray[5] = triangle;
 	ShapeArray[6] = poly;
 	ShapeArray[7] = poly2;
-	clock_t t;
+	
 
 	bool Display = true;
 	fillImageArray();
 	SDL_Event event;
+	render();
 	while (Display) {
-		//Of Controls returns false close program
+		//if Controls returns false close program
 		Display = Controls();
-		t = clock();
-		clearImageArray();
-		ray.RayCast(image, ShapeArray);
-		t = clock() - t;
-		std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
 	}
 	Save_Image();
 	SDL_DestroyWindow(window);
