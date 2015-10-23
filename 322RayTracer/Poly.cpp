@@ -4,7 +4,7 @@ void Poly::CalcNormal()
 {
 	glm::vec3 v1 = B - A;
 	glm::vec3 v2 = C - A;
-	Normal = glm::normalize(glm::cross(v1, v2));
+	Normal = glm::normalize(glm::cross(v2, v1));
 }
 
 Intersect Poly::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection)
@@ -56,6 +56,6 @@ Intersect Poly::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection)
 glm::vec3 Poly::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirection, glm::vec3 lightpos, float intensity)
 {
 	glm::vec3 ContactPoint = ROrigin + _t*RDirection;
-	glm::vec3 l = glm::normalize(ContactPoint - lightpos);
+	glm::vec3 l = glm::normalize(lightpos - ContactPoint);
 	return CalcAmbient() + CalcDiffuse(l, Normal, intensity) + CalcSpecular(l, Normal, ROrigin, ContactPoint, intensity);
 }

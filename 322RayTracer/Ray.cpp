@@ -43,8 +43,7 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 	float WorldSpacex;
 	float WorldSpacey;
 	glm::vec3 Pcameraspace; 
-	Intersect intersection(0,glm::vec3(0,0,0));
-	
+	Intersect intersection(0, glm::vec3(0, 0, 0));
 	for (int x = 0; x < width; x++) {
 		for (int y = 0; y < height; y++) {
 			RemappedX = ((2*PixelNormalized(x,width) - 1)*ImageAspectRatio);
@@ -53,7 +52,7 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 			WorldSpacey = RemappedY * Fov;
 			Pcameraspace = glm::vec3(WorldSpacex+ Origin.x, WorldSpacey + Origin.y,-1+Origin.z);
 			Direction = glm::normalize(Pcameraspace - Origin);
-
+			
 			intersection = CheckHit(ShapeArray,Origin, Direction);
 			if (intersection.ObjectID != -1) {
 				if (light != NULL) {
