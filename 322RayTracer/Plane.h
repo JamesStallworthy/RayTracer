@@ -7,15 +7,12 @@ public:
 	glm::vec3 Origin;
 	glm::vec3 Normal;
 	//Light* light;
-	Plane(glm::vec3 o, glm::vec3 n, glm::vec3 c, float _Ambient,float _Specular, Light* _light) :
-		Shape(c,_Ambient,_Specular,_light), Origin(o)
+	Plane(glm::vec3 o, glm::vec3 n, glm::vec3 c, float _Ambient,float _Specular) :
+		Shape(c,_Ambient,_Specular), Origin(o)
 	{
 		Normal = glm::normalize(n);
 	};
 
 	virtual Intersect Intersection(glm::vec3 Origin, glm::vec3 Direction);
-	virtual glm::vec3 PhongShading(float, glm::vec3, glm::vec3);
-	/*glm::vec3 CalcAmbient();
-	glm::vec3 CalcDiffuse(glm::vec3 l, glm::vec3 n);
-	glm::vec3 CalcSpecular(glm::vec3 l, glm::vec3 n, glm::vec3 CameraPos, glm::vec3 ContactPoint);*/
+	virtual glm::vec3 PhongShading(float, glm::vec3, glm::vec3, glm::vec3, float);
 };

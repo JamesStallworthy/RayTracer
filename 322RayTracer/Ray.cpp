@@ -60,7 +60,7 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 					//HARD SHADOWS
 					std::cout << "Hard Shadows" << std::endl;
 					if (!HardShadows(ShapeArray, intersection))
-						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction));
+						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction,glm::vec3(0,10,0), arealight->intensity));
 					else
 						ReturnedColour = ShapeArray[intersection.ObjectID]->CalcAmbient();
 				}
@@ -68,10 +68,10 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 					//SOFT SHADOWS
 					float AverageSoftShadow = SoftShadows(ShapeArray, intersection);
 					if (AverageSoftShadow == 0) {
-						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction));
+						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction,arealight->position, arealight->intensity));
 					}
 					else {
-						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction)) * (1 - AverageSoftShadow);
+						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction, arealight->position, arealight->intensity)) * (1 - AverageSoftShadow);
 						//ReturnedColour = ShapeArray[intersection.ObjectID]->Colour * (1 -AverageSoftShadow);
 					}
 

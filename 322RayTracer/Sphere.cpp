@@ -19,12 +19,12 @@ Intersect Sphere::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection) {
 	return Intersect(t,n);
 }
 
-glm::vec3 Sphere::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirection)
+glm::vec3 Sphere::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirection, glm::vec3 lightpos, float intensity)
 {
 	glm::vec3 ContactPoint = ROrigin + _t*RDirection;
-	glm::vec3 l = glm::normalize(ContactPoint - light->Position);
+	glm::vec3 l = glm::normalize(ContactPoint - lightpos);
 	glm::vec3 n = glm::normalize(Origin - ContactPoint);
-	return CalcAmbient()+ CalcDiffuse(l, n) + CalcSpecular(l,n,Origin,ContactPoint);
+	return CalcAmbient()+ CalcDiffuse(l, n, intensity) + CalcSpecular(l,n,Origin,ContactPoint, intensity);
 }
 
 

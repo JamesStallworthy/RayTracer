@@ -53,9 +53,9 @@ Intersect Poly::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection)
 	return Intersect(-1, Normal);
 }
 
-glm::vec3 Poly::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirection)
+glm::vec3 Poly::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirection, glm::vec3 lightpos, float intensity)
 {
 	glm::vec3 ContactPoint = ROrigin + _t*RDirection;
-	glm::vec3 l = glm::normalize(ContactPoint - light->Position);
-	return CalcAmbient() + CalcDiffuse(l, Normal) + CalcSpecular(l, Normal, ROrigin, ContactPoint);
+	glm::vec3 l = glm::normalize(ContactPoint - lightpos);
+	return CalcAmbient() + CalcDiffuse(l, Normal, intensity) + CalcSpecular(l, Normal, ROrigin, ContactPoint, intensity);
 }
