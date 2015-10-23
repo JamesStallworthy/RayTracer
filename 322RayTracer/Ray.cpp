@@ -58,7 +58,6 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 			if (intersection.ObjectID != -1) {
 				if (light != NULL) {
 					//HARD SHADOWS
-					std::cout << "Hard Shadows" << std::endl;
 					if (!HardShadows(ShapeArray, intersection))
 						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction,glm::vec3(0,10,0), arealight->intensity));
 					else
@@ -71,7 +70,7 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction,arealight->position, arealight->intensity));
 					}
 					else {
-						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction, arealight->position, arealight->intensity)) * (1 - AverageSoftShadow);
+						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction, arealight->position, arealight->intensity)) *((1 - AverageSoftShadow)*0.5f + 0.5f);
 						//ReturnedColour = ShapeArray[intersection.ObjectID]->Colour * (1 -AverageSoftShadow);
 					}
 
@@ -115,20 +114,21 @@ float Ray::SoftShadows(Shape * _ShapeArray[], Intersect i)
 	float average = 0;
 	glm::vec3 ContactPoint = Origin + i.Distance*Direction;
 	glm::vec3 VecToLight;
-	for (int z = 0; z < 64; z++) {
-	VecToLight = glm::normalize(RandomPointInAreaLight() - ContactPoint);
-	Intersect intersect = CheckHit(_ShapeArray, ContactPoint + i.Normal*0.001f, VecToLight);
-	if (intersect.ObjectID == -1 || intersect.ObjectID == i.ObjectID)
-		average ++;
+	srand(1);
+	for (int z = 0; z < arealight->samples; z++) {
+		VecToLight = glm::normalize(RandomPointInAreaLight() - ContactPoint);
+		Intersect intersect = CheckHit(_ShapeArray, ContactPoint + i.Normal*0.001f, VecToLight);
+		if (intersect.ObjectID == -1 || intersect.ObjectID == i.ObjectID)
+			average ++;
 	}
-	return 1- (average/64);
+	return 1-(average / arealight->samples);
 }
 
 glm::vec3 Ray::RandomPointInAreaLight()
 {
-	int rad = (arealight->radius)*10;
-	float x = arealight->position.x + ((rand()%rad)/10) * cos(rand());
-	float z = arealight->position.z + ((rand() % rad) / 10) * sin(rand());
+	int rad = (arealight->radius)*1000;
+	float x = arealight->position.x + ((rand()%rad)/1000) * cos(rand());
+	float z = arealight->position.z + ((rand() % rad) / 1000) * sin(rand());
 	return glm::vec3(x, arealight->position.y, z);
 }
 
