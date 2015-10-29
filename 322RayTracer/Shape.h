@@ -10,8 +10,10 @@ public:
 	float Ambient;
 	float Specular;
 	bool Reflective;
-	Shape(glm::vec3 _Colour, float _Ambient, float _Specular, bool _Reflective) :
-		Colour(_Colour), Ambient(_Ambient), Specular(_Specular),  Reflective(_Reflective){};
+	float Reflectivity;
+	float AmountOfBaseColour;
+	Shape(glm::vec3 _Colour, float _Ambient, float _Specular, bool _Reflective, float _Reflectivity, float _AmountOfBaseColour) :
+		Colour(_Colour), Ambient(_Ambient), Specular(_Specular),  Reflective(_Reflective), Reflectivity(_Reflectivity), AmountOfBaseColour(_AmountOfBaseColour){};
 	glm::vec3 Colour;
 	
 	virtual Intersect Intersection(glm::vec3 Origin, glm::vec3 Direction)=0;

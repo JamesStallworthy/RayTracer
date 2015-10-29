@@ -39,10 +39,12 @@ glm::vec3 Shape::Reflections(glm::vec3 n, glm::vec3 RDireciton, glm::vec3 Contac
 	//r = d?2(d?n)n
 	glm::vec3 RRay = RDireciton - 2.0f*(glm::dot(RDireciton, n) * n);
 	Intersect Object = CheckHit(ShapeArray, ContactPoint, RRay, numberofshapes);
-	if (Object.ObjectID!=-1)
-		return ShapeArray[Object.ObjectID]->PhongShading(Object.Distance, ContactPoint, RRay,lightpos, intensity, ShapeArray, numberofshapes);
+	glm::vec3 l = glm::normalize(ContactPoint - lightpos);
+	if (Object.ObjectID != -1) {
+		return AmountOfBaseColour*(CalcAmbient() + CalcDiffuse(l, n, intensity) + CalcSpecular(l, n, glm::vec3(0,0,0), ContactPoint, intensity)) + Reflectivity*ShapeArray[Object.ObjectID]->PhongShading(Object.Distance, ContactPoint, RRay, lightpos, intensity, ShapeArray, numberofshapes);
+	}
 
-	return glm::vec3(0, 0, 0);
+	return AmountOfBaseColour*(CalcAmbient() + CalcDiffuse(l, n, intensity) + CalcSpecular(l, n, glm::vec3(0, 0, 0), ContactPoint, intensity)) + Reflectivity *glm::vec3(0,0,0);
 }
 
 

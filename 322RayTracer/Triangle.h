@@ -12,8 +12,8 @@ public:
 	glm::vec3 c;
 	//Light* light;
 	void CalculateNormal();
-	Triangle(glm::vec3 Point1, glm::vec3 Point2, glm::vec3 Point3, glm::vec3 c, float _Ambient, float _Specular, bool _Reflective) :
-		Shape(c,_Ambient,_Specular,_Reflective), a(Point1), b(Point2), c(Point3)
+	Triangle(glm::vec3 Point1, glm::vec3 Point2, glm::vec3 Point3, glm::vec3 c, float _Ambient, float _Specular, bool _Reflective, float _Reflectivity, float _AmountOfBaseColour) :
+		Shape(c,_Ambient,_Specular,_Reflective, _Reflectivity, _AmountOfBaseColour), a(Point1), b(Point2), c(Point3)
 	{
 		CalculateNormal();
 	};
