@@ -34,13 +34,13 @@ Intersect Shape::CheckHit(Shape* SArray[], glm::vec3 _O, glm::vec3 _D, float Amo
 	return LowestIntersect;
 }
 
-glm::vec3 Shape::Reflections(glm::vec3 n, glm::vec3 RDireciton, glm::vec3 ContactPoint, Shape* ShapeArray[])
+glm::vec3 Shape::Reflections(glm::vec3 n, glm::vec3 RDireciton, glm::vec3 ContactPoint, Shape* ShapeArray[], glm::vec3 lightpos, float intensity, int numberofshapes)
 {
 	//r = d?2(d?n)n
 	glm::vec3 RRay = RDireciton - 2.0f*(glm::dot(RDireciton, n) * n);
-	Intersect Object = CheckHit(ShapeArray, ContactPoint, RRay, 8);
+	Intersect Object = CheckHit(ShapeArray, ContactPoint, RRay, numberofshapes);
 	if (Object.ObjectID!=-1)
-		return ShapeArray[Object.ObjectID]->PhongShading(Object.Distance, ContactPoint, RRay, glm::vec3(0,10,0), 1, ShapeArray);
+		return ShapeArray[Object.ObjectID]->PhongShading(Object.Distance, ContactPoint, RRay,lightpos, intensity, ShapeArray, numberofshapes);
 
 	return glm::vec3(0, 0, 0);
 }

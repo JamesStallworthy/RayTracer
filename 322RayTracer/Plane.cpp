@@ -12,7 +12,7 @@ Intersect Plane::Intersection(glm::vec3 ROrigin, glm::vec3 RDirection)
 	return Intersect(-1, Normal);
 }
 
-glm::vec3 Plane::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirection, glm::vec3 lightpos, float intensity, Shape* ShapeArray[])
+glm::vec3 Plane::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirection, glm::vec3 lightpos, float intensity, Shape* ShapeArray[], int numberofshapes)
 {
 	glm::vec3 ContactPoint = ROrigin + _t*RDirection;
 	glm::vec3 l = glm::normalize(lightpos - ContactPoint);
