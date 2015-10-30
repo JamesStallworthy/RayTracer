@@ -19,25 +19,35 @@ int height = 480;
 
 glm::vec3 **image = new glm::vec3*[width];
 Light light(glm::vec3(0,10,0),1);
-AreaLight arealight(glm::vec3(0, 10, 0), 5, 1, 16);
-Ray ray(80, width, height, NULL, &arealight, 8);
-Shape* One = new Sphere(glm::vec3(0, 0, -20), 4, glm::vec3(1, 0.32, 0.36),0.1,100, true, 1, 0.1);
-Shape* Two = new Sphere(glm::vec3(5, -1, -15), 2, glm::vec3(0.9, 0.76, 0.46),0.1,100, true, 1, 0.1);
-Shape* Three = new Sphere(glm::vec3(5, 0, -25), 3, glm::vec3(0.65, 0.77, 0.97),0.1,100, false, 1, 0.1);
-Shape* Four = new Sphere(glm::vec3(-5.5, 0, -15), 3, glm::vec3(0.90, 0.9, 0.9),0.1,100, false, 1, 0.1);
-Shape* plane = new Plane(glm::vec3(0, -4, -20), glm::vec3(0, 1, 0), glm::vec3(0.2, 0.2, 0.2),0.1,100, false, 1, 0.1);
-Shape* poly = new Poly(glm::vec3(4, -3, -10), glm::vec3(5, -3, -10), glm::vec3(4, -4, -10), glm::vec3(5, -4, -10), glm::vec3(1, 1, 1), 0.1, 100, false, 1, 0.1);
-Shape* poly2 = new Poly(glm::vec3(4, -3, -10), glm::vec3(4, -3, -11), glm::vec3(4, -4, -10), glm::vec3(4, -4, -11), glm::vec3(1, 1, 1), 0.1, 100, false, 1, 0.1);
-Shape* triangle = new Triangle(glm::vec3(0, -1, -5), glm::vec3(2, -1, -5), glm::vec3(1, -1, -15), glm::vec3(1, 0, 0),0.1,100, false, 1, 0.1);
-Shape* ShapeArray[8];
+AreaLight arealight(glm::vec3(0, 10, 0), 5, 1, 17);
+Ray ray(80, width, height, &light, &arealight, 20);
+Shape* One = new Sphere(glm::vec3(0, -2, -20), 2, glm::vec3(0, 0.2, 0.7),0.1,100, false, 1, 0.5);
+Shape* Two = new Sphere(glm::vec3(0, -2, -24), 2, glm::vec3(0, 0.2, 0.7), 0.1, 100, false, 1, 0.5);
+Shape* Three = new Sphere(glm::vec3(0, -2, -28), 2, glm::vec3(0, 0.2, 0.7), 0.1, 100, false, 1, 0.5);
+Shape* Four = new Sphere(glm::vec3(-4, -2, -24), 2, glm::vec3(0, 0.2, 0.7), 0.1, 100, false, 1, 0.5);
+Shape* Five = new Sphere(glm::vec3(4, -2, -20), 2, glm::vec3(0, 0.2, 0.7), 0.1, 100, false, 1, 0.5);
+Shape* Six = new Sphere(glm::vec3(4, -2, -24), 2, glm::vec3(0, 0.2, 0.7), 0.1, 100, false, 1, 0.5);
+Shape* Seven = new Sphere(glm::vec3(4, -2, -28), 2, glm::vec3(0, 0.2, 0.7), 0.1, 100, false, 1, 0.5);
+Shape* Eight = new Sphere(glm::vec3(-4, -2, -20), 2, glm::vec3(0, 0.2, 0.7), 0.1, 100, false, 1, 0.5);
+Shape* Nine = new Sphere(glm::vec3(-4, -2, -28), 2, glm::vec3(0, 0.2, 0.7), 0.1, 100, false, 1, 0.5);
+Shape* Ten = new Sphere(glm::vec3(-2, 1, -22), 2, glm::vec3(0, 0.2, 0.7), 0.1, 100, false, 1, 0.5);
+Shape* Eleven = new Sphere(glm::vec3(-2, 1, -26), 2, glm::vec3(0, 0.2, 0.7), 0.1, 100, false, 1, 0.5);
+Shape* Twelve = new Sphere(glm::vec3(2, 1, -22), 2, glm::vec3(0, 0.2, 0.7), 0.1, 100, false, 1, 0.5);
+Shape* Thirteen = new Sphere(glm::vec3(2, 1, -26), 2, glm::vec3(0, 0.2, 0.7), 0.1, 100, false, 1, 0.5);
+Shape* Fourteen = new Sphere(glm::vec3(0, 4, -24), 2, glm::vec3(0, 0.2, 0.7), 0.1, 100, true, 1, 0.2);
+Shape* Fithteen = new Sphere(glm::vec3(15, 4, -24), 5, glm::vec3(1, 1, 0), 0.1, 100, true, 1, 0.1);
+//Shape* Two = new Sphere(glm::vec3(5, -1, -15), 2, glm::vec3(0.9, 0.76, 0.46),0.1,100, true, 1, 0.5);
+//Shape* Three = new Sphere(glm::vec3(5, 0, -25), 3, glm::vec3(0.65, 0.77, 0.97),0.1,100, false, 1, 0.1);
+//Shape* Four = new Sphere(glm::vec3(-5.5, 0, -15), 3, glm::vec3(0.90, 0.9, 0.9),0.1,100, false, 1, 0.1);
+Shape* plane = new Plane(glm::vec3(0, -4, -20), glm::vec3(0, 1, 0), glm::vec3(0.2, 0.2, 0.2),0.1,100, false, 1, 1);
+//Shape* poly = new Poly(glm::vec3(4, -3, -10), glm::vec3(5, -3, -10), glm::vec3(4, -4, -10), glm::vec3(5, -4, -10), glm::vec3(1, 1, 1), 0.1, 100, false, 1, 0.1);
+//Shape* poly2 = new Poly(glm::vec3(4, -3, -10), glm::vec3(4, -3, -11), glm::vec3(4, -4, -10), glm::vec3(4, -4, -11), glm::vec3(1, 1, 1), 0.1, 100, false, 1, 0.1);
+Shape* triangle = new Triangle(glm::vec3(-20, -4, -20), glm::vec3(-10, -4, -20), glm::vec3(-15, 2, -25), glm::vec3(1, 0, 0),0.1,100, false, 1, 0.1);
+Shape* triangle2 = new Triangle(glm::vec3(-20, -4, -30), glm::vec3(-10, -4, -30), glm::vec3(-15, 2, -25), glm::vec3(1, 0, 0), 0.1, 100, false, 1, 0.1);
+Shape* triangle3 = new Triangle(glm::vec3(-20, -4, -30), glm::vec3(-20, -4, -20), glm::vec3(-15, 2, -25), glm::vec3(1, 0, 0), 0.1, 100, false, 1, 0.1);
+Shape* triangle4 = new Triangle(glm::vec3(-10, -4, -20), glm::vec3(-10, -4, -30), glm::vec3(-15, 2, -25), glm::vec3(1, 0, 0), 0.1, 100, false, 1, 0.1);
+Shape* ShapeArray[20];
 
-void Fill_Image() {
-	for (int x = 0; x < width; x++) {
-		for (int y = 0; y < height; y++) {
-			image[x][y] = glm::vec3(1, 1, 0);
-		}
-	}
-}
 
 void Save_Image() {
 	std::ofstream ofs("./untitled.pmm", std::ios::out | std::ios::binary);
@@ -111,12 +121,22 @@ int main(int argc, char *argv[]) {
 	ShapeArray[1] = Two;
 	ShapeArray[2] = Three;
 	ShapeArray[3] = Four;
-	ShapeArray[4] = plane;
-	ShapeArray[5] = triangle;
-	ShapeArray[6] = poly;
-	ShapeArray[7] = poly2;
-	
-
+	ShapeArray[4] = Five;
+	ShapeArray[5] = plane;
+	ShapeArray[6] = Six;
+	ShapeArray[7] = Seven;
+	ShapeArray[8] = Eight;
+	ShapeArray[9] = Nine;
+	ShapeArray[10] = Ten;
+	ShapeArray[11] = Eleven;
+	ShapeArray[12] = Twelve;
+	ShapeArray[13] = Thirteen;
+	ShapeArray[14] = Fourteen;
+	ShapeArray[15] = Fithteen;
+	ShapeArray[16] = triangle;
+	ShapeArray[17] = triangle2;
+	ShapeArray[18] = triangle3;
+	ShapeArray[19] = triangle4;
 	bool Display = true;
 	fillImageArray();
 	SDL_Event event;
