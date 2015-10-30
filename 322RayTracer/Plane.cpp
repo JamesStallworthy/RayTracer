@@ -16,5 +16,5 @@ glm::vec3 Plane::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirection,
 {
 	glm::vec3 ContactPoint = ROrigin + _t*RDirection;
 	glm::vec3 l = glm::normalize(lightpos - ContactPoint);
-	return CalcAmbient() + CalcDiffuse(l, Normal, intensity) + CalcSpecular(l, Normal, ROrigin, ContactPoint, intensity);
+	return CalcAmbient() + CalcDiffuse(l, Normal, intensity) + CalcSpecular(-l, Normal, ROrigin, ContactPoint, intensity);
 }

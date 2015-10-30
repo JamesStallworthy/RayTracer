@@ -14,7 +14,7 @@ glm::vec3 Shape::CalcDiffuse(glm::vec3 l, glm::vec3 n, float intensity)
 
 glm::vec3 Shape::CalcSpecular(glm::vec3 l, glm::vec3 n, glm::vec3 CameraPos, glm::vec3 ContactPoint, float intensity) {
 	glm::vec3 v = glm::normalize(CameraPos - ContactPoint);
-	glm::vec3 r = glm::normalize(0.1f * (glm::dot(l, n))*n + l);
+	glm::vec3 r = glm::normalize(l - 2.0f*(glm::dot(l, n) * n));
 	glm::vec3 Calc1 = glm::vec3(1,1,1) * intensity;
 	float Calc2 = pow(std::fmax(0, glm::dot(r, v)), Specular);
 	return Calc1*Calc2;
@@ -39,12 +39,11 @@ glm::vec3 Shape::Reflections(glm::vec3 n, glm::vec3 RDireciton, glm::vec3 Contac
 	//r = d?2(d?n)n
 	glm::vec3 RRay = RDireciton - 2.0f*(glm::dot(RDireciton, n) * n);
 	Intersect Object = CheckHit(ShapeArray, ContactPoint, RRay, numberofshapes);
-	glm::vec3 l = glm::normalize(ContactPoint - lightpos);
+	glm::vec3 l = glm::normalize(lightpos - ContactPoint);
 	if (Object.ObjectID != -1) {
-		return AmountOfBaseColour*(CalcAmbient() + CalcDiffuse(l, n, intensity) + CalcSpecular(l, n, glm::vec3(0,0,0), ContactPoint, intensity)) + Reflectivity*ShapeArray[Object.ObjectID]->PhongShading(Object.Distance, ContactPoint, RRay, lightpos, intensity, ShapeArray, numberofshapes);
+		return AmountOfBaseColour*(CalcAmbient() + CalcDiffuse(l, n, intensity) + CalcSpecular(-l, n, glm::vec3(0,0,0), ContactPoint, intensity)) + Reflectivity*ShapeArray[Object.ObjectID]->PhongShading(Object.Distance, ContactPoint, RRay, lightpos, intensity, ShapeArray, numberofshapes);
 	}
-
-	return AmountOfBaseColour*(CalcAmbient() + CalcDiffuse(l, n, intensity) + CalcSpecular(l, n, glm::vec3(0, 0, 0), ContactPoint, intensity)) + Reflectivity *glm::vec3(0,0,0);
+	return AmountOfBaseColour*(CalcAmbient() + CalcDiffuse(l, n, intensity) + CalcSpecular(-l, n, glm::vec3(0, 0, 0), ContactPoint, intensity)) + Reflectivity *glm::vec3(0,0,0);
 }
 
 

@@ -19,7 +19,7 @@ int height = 480;
 
 glm::vec3 **image = new glm::vec3*[width];
 Light light(glm::vec3(0,10,0),1);
-AreaLight arealight(glm::vec3(0, 10, 0), 5, 1, 17);
+AreaLight arealight(glm::vec3(0, 10, -30), 5, 1, 17);
 Ray ray(80, width, height, &light, &arealight, 21);
 
 //Sphere Pyramid
@@ -42,13 +42,13 @@ Shape* Fourteen = new Sphere(glm::vec3(0, 4, -24), 2, glm::vec3(0, 0.2, 0.7), 0.
 Shape* Mirror1 = new Sphere(glm::vec3(15, 4, -24), 5, glm::vec3(1, 1, 0), 0.1, 100, true, 1, 0.1);
 Shape* Mirror2 = new Sphere(glm::vec3(-25, 4, -30), 5, glm::vec3(0.6, 0.6, 0.6), 0.1, 100, true, 1, 0.1);
 
-Shape* plane = new Plane(glm::vec3(0, -4, -20), glm::vec3(0, 1, 0), glm::vec3(0.2, 0.2, 0.2),0.1,100, false, 1, 1);
+Shape* plane = new Plane(glm::vec3(0, -4, -20), glm::vec3(0, 1, 0), glm::vec3(0.2, 0.2, 0.2),0.1,10000, false, 1, 1);
 
 //Triangle Pyramid
-Shape* triangle = new Triangle(glm::vec3(-20, -3, -20), glm::vec3(-10, -3, -20), glm::vec3(-15, 4, -25), glm::vec3(1, 0, 0),0.1,100, false, 1, 0.1);
-Shape* triangle2 = new Triangle(glm::vec3(-20, -3, -30), glm::vec3(-10, -3, -30), glm::vec3(-15, 4, -25), glm::vec3(1, 0, 0), 0.1, 100, false, 1, 0.1);
-Shape* triangle3 = new Triangle(glm::vec3(-20, -3, -30), glm::vec3(-20, -3, -20), glm::vec3(-15, 4, -25), glm::vec3(1, 0, 0), 0.1, 100, false, 1, 0.1);
-Shape* triangle4 = new Triangle(glm::vec3(-10, -3, -20), glm::vec3(-10, -3, -30), glm::vec3(-15, 4, -25), glm::vec3(1, 0, 0), 0.1, 100, false, 1, 0.1);
+Shape* triangle = new Triangle(glm::vec3(-10, -3, -20), glm::vec3(-20, -3, -20), glm::vec3(-15, 4, -25), glm::vec3(1, 0, 0),0.1,2, false, 1, 0.1);
+Shape* triangle2 = new Triangle(glm::vec3(-20, -3, -30), glm::vec3(-10, -3, -30), glm::vec3(-15, 4, -25), glm::vec3(1, 0, 0), 0.1, 2, false, 1, 0.1);
+Shape* triangle3 = new Triangle(glm::vec3(-20, -3, -20), glm::vec3(-20, -3, -30), glm::vec3(-15, 4, -25), glm::vec3(1, 0, 0), 0.1, 2, false, 1, 0.1);
+Shape* triangle4 = new Triangle(glm::vec3(-10, -3, -30), glm::vec3(-10, -3, -20), glm::vec3(-15, 4, -25), glm::vec3(1, 0, 0), 0.1, 2, false, 1, 0.1);
 
 //Shape* poly2 = new Poly(glm::vec3(4, -3, -10), glm::vec3(4, -3, -11), glm::vec3(4, -4, -10), glm::vec3(4, -4, -11), glm::vec3(1, 1, 1), 0.1, 100, false, 1, 0.1);
 Shape* ShapeArray[21];
@@ -147,8 +147,20 @@ int main(int argc, char *argv[]) {
 	fillImageArray();
 	SDL_Event event;
 	render();
+	//while (Display) {
+	//	//if Controls returns false close program
+	//	Display = Controls();
+	//}
+	float Direction= - 1;
 	while (Display) {
 		//if Controls returns false close program
+		render();
+		if (light.Position.z < -50)
+			Direction = 1;
+		if (light.Position.z > 0)
+			Direction = -1;
+		
+		light.Position.z = light.Position.z + Direction;
 		Display = Controls();
 	}
 	Save_Image();

@@ -23,13 +23,13 @@ glm::vec3 Sphere::PhongShading(float _t, glm::vec3 ROrigin, glm::vec3 RDirection
 {
 	if (!Reflective) {
 		glm::vec3 ContactPoint = ROrigin + _t*RDirection;
-		glm::vec3 l = glm::normalize(ContactPoint - lightpos);
-		glm::vec3 n = glm::normalize(Origin - ContactPoint);
+		glm::vec3 l = glm::normalize(lightpos - ContactPoint);
+		glm::vec3 n = glm::normalize(ContactPoint - Origin);
 		return CalcAmbient() + CalcDiffuse(l, n, intensity) + CalcSpecular(l, n, Origin, ContactPoint, intensity);
 	}
 	else {
 		glm::vec3 ContactPoint = ROrigin + _t*RDirection;
-		glm::vec3 n = glm::normalize(Origin - ContactPoint);
+		glm::vec3 n = glm::normalize(ContactPoint - Origin);
 		return(Reflections(n, RDirection, ContactPoint, ShapeArray, lightpos, intensity, numberofshapes));
 	}
 }

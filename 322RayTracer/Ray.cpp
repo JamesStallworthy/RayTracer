@@ -58,7 +58,7 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 				if (light != NULL) {
 					//HARD SHADOWS
 					if (!HardShadows(ShapeArray, intersection))
-						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction,glm::vec3(0,10,0), light->Intensity, ShapeArray, AmountOfShapes));
+						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction,light->Position, light->Intensity, ShapeArray, AmountOfShapes));
 					else
 						ReturnedColour = ShapeArray[intersection.ObjectID]->CalcAmbient();
 				}
