@@ -43,7 +43,7 @@ glm::vec3 Shape::Reflections(glm::vec3 n, glm::vec3 RDireciton, glm::vec3 Contac
 	if (Object.ObjectID != -1) {
 		return AmountOfBaseColour*(CalcAmbient() + CalcDiffuse(l, n, intensity) + CalcSpecular(-l, n, glm::vec3(0,0,0), ContactPoint, intensity)) + Reflectivity*ShapeArray[Object.ObjectID]->PhongShading(Object.Distance, ContactPoint, RRay, lightpos, intensity, ShapeArray, numberofshapes);
 	}
-	return AmountOfBaseColour*(CalcAmbient() + CalcDiffuse(l, n, intensity) + CalcSpecular(-l, n, glm::vec3(0, 0, 0), ContactPoint, intensity)) + Reflectivity *glm::vec3(0,0.588,0.78);
+	return AmountOfBaseColour*(CalcAmbient() + CalcDiffuse(l, n, intensity) + CalcSpecular(-l, n, glm::vec3(0, 0, 0), ContactPoint, intensity)) + Reflectivity *glm::vec3(0,0,0);
 }
 
 

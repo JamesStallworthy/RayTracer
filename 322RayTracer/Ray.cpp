@@ -34,7 +34,7 @@ Intersect Ray::CheckHit(Shape* SArray[], glm::vec3 _O, glm::vec3 _D)
 void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 {
 	//SDL clear screen
-	SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0.588*255, 0.78*255));
+	SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0, 0));
 	//Pixel Colour
 	glm::vec3 ReturnedColour;
 	
