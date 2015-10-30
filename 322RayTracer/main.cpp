@@ -17,9 +17,14 @@ clock_t t;
 int width = 640;
 int height = 480;
 
+float DirectionCam = -1;//For camera movement
+float DirectionSphere = -1;//For ball movement
+bool CamMove = false;
+bool SphereMove = false;
+
 glm::vec3 **image = new glm::vec3*[width];
-Light light(glm::vec3(0,10,0),1);
-AreaLight arealight(glm::vec3(0, 10, -30), 5, 1, 17);
+Light light(glm::vec3(0,15,0),1);
+AreaLight arealight(glm::vec3(0, 15, 0), 5, 1, 4);
 Ray ray(80, width, height, &light, &arealight, 21);
 
 //Sphere Pyramid
@@ -39,10 +44,11 @@ Shape* Thirteen = new Sphere(glm::vec3(2, 1, -26), 2, glm::vec3(0, 0.2, 0.7), 0.
 Shape* Fourteen = new Sphere(glm::vec3(0, 4, -24), 2, glm::vec3(0, 0.2, 0.7), 0.1, 100, true, 1, 0.2);
 
 //Mirrow Balls
-Shape* Mirror1 = new Sphere(glm::vec3(15, 4, -24), 5, glm::vec3(1, 1, 0), 0.1, 100, true, 1, 0.1);
-Shape* Mirror2 = new Sphere(glm::vec3(-25, 4, -30), 5, glm::vec3(0.6, 0.6, 0.6), 0.1, 100, true, 1, 0.1);
+Shape* Mirror1 = new Sphere(glm::vec3(15, 4, -24), 5, glm::vec3(1, 1, 0), 0.1, 10, true, 1, 0.07);
+Shape* Mirror2 = new Sphere(glm::vec3(-25, 6, -35), 5, glm::vec3(0.6, 0.6, 0.6), 0.1, 10, true, 1, 0.1);
 
 Shape* plane = new Plane(glm::vec3(0, -4, -20), glm::vec3(0, 1, 0), glm::vec3(0.2, 0.2, 0.2),0.1,10000, false, 1, 1);
+Shape* background = new Plane(glm::vec3(0, 0, -50), glm::vec3(0, 0, 1), glm::vec3(0, 0.7, 1), 0.1, 10000, false, 1, 1);
 
 //Triangle Pyramid
 Shape* triangle = new Triangle(glm::vec3(-10, -3, -20), glm::vec3(-20, -3, -20), glm::vec3(-15, 4, -25), glm::vec3(1, 0, 0),0.1,2, false, 1, 0.1);
@@ -51,7 +57,7 @@ Shape* triangle3 = new Triangle(glm::vec3(-20, -3, -20), glm::vec3(-20, -3, -30)
 Shape* triangle4 = new Triangle(glm::vec3(-10, -3, -30), glm::vec3(-10, -3, -20), glm::vec3(-15, 4, -25), glm::vec3(1, 0, 0), 0.1, 2, false, 1, 0.1);
 
 //Shape* poly2 = new Poly(glm::vec3(4, -3, -10), glm::vec3(4, -3, -11), glm::vec3(4, -4, -10), glm::vec3(4, -4, -11), glm::vec3(1, 1, 1), 0.1, 100, false, 1, 0.1);
-Shape* ShapeArray[21];
+Shape* ShapeArray[22];
 
 
 void Save_Image() {
@@ -84,10 +90,10 @@ void render() {
 	clearImageArray();
 	ray.RayCast(image, ShapeArray);
 	t = clock() - t;
-	std::cout << "Time: " << (float)t / CLOCKS_PER_SEC << std::endl;
+	std::cout << "Frame took: " << (float)t / CLOCKS_PER_SEC << " seconds to render."<< std::endl;
 }
 
-bool Controls() {
+bool Controls(SDL_Window* _window) {
 
 	if (SDL_PollEvent(&event)) {
 		if (event.type == SDL_QUIT) {
@@ -110,9 +116,44 @@ bool Controls() {
 				ray.Origin.z++;
 				render();
 			}
+			else if (event.key.keysym.sym == SDLK_LSHIFT) {
+				ray.Origin.y++;
+				render();
+			}
+			else if (event.key.keysym.sym == SDLK_LCTRL) {
+				ray.Origin.y--;
+				render();
+			}
+			else if (event.key.keysym.sym == SDLK_z) {
+				CamMove = !CamMove;
+			}
+			else if (event.key.keysym.sym == SDLK_x) {
+				SphereMove = !SphereMove;
+			}
+			else if (event.key.keysym.sym == SDLK_f) {
+				ray.Shadows = !ray.Shadows;
+				render();
+			}
 		}
 	}
+	return true;
 
+}
+
+void movelight() {
+	if (light.Position.z < -50)
+		DirectionCam = 1;
+	if (light.Position.z > 0)
+		DirectionCam = -1;
+	light.Position.z = light.Position.z + DirectionCam;
+}
+
+void movesphere() {
+	if (Mirror2->GetOrigin().x < -30)
+		DirectionSphere = 1;
+	if (Mirror2->GetOrigin().x > 30)
+		DirectionSphere = -1;
+	Mirror2->SetOrigin(Mirror2->GetOrigin() + glm::vec3(DirectionSphere,0,0));
 }
 
 int main(int argc, char *argv[]) {
@@ -121,7 +162,11 @@ int main(int argc, char *argv[]) {
 	window = SDL_CreateWindow("Raycaster", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, NULL);
 	SDL_Surface *surface = SDL_GetWindowSurface(window);
 	ray.SetWindow(window, surface);
-	
+	int samples;
+	std::cout << "How many softshadow samples: " << std::endl;
+	std::cin >> samples;
+	std::cout << "Rendering...." << std::endl;
+	arealight.samples = samples;
 	ShapeArray[0] = One;
 	ShapeArray[1] = Two;
 	ShapeArray[2] = Three;
@@ -143,25 +188,25 @@ int main(int argc, char *argv[]) {
 	ShapeArray[18] = triangle3;
 	ShapeArray[19] = triangle4;
 	ShapeArray[20] = Mirror2;
+	ShapeArray[21] = background;
 	bool Display = true;
 	fillImageArray();
 	SDL_Event event;
 	render();
-	//while (Display) {
-	//	//if Controls returns false close program
-	//	Display = Controls();
-	//}
-	float Direction= - 1;
+
+	std::cout << "\n---------------------------------\n";
+	std::cout << "WASD keys to move camera \nShift and Ctrl to move up and down\nZ to activate moving light\nX to activate moving mirror sphere\nF to toggle shadows" << std::endl;
+	std::cout << "\n---------------------------------\n";
 	while (Display) {
-		//if Controls returns false close program
-		render();
-		if (light.Position.z < -50)
-			Direction = 1;
-		if (light.Position.z > 0)
-			Direction = -1;
-		
-		light.Position.z = light.Position.z + Direction;
-		Display = Controls();
+		//if display == false close program
+		if (CamMove)
+			movelight();
+		if (SphereMove)
+			movesphere();
+		//if ball is moving or cam is moving update screen every frame
+		if (CamMove||SphereMove)
+			render();
+		Display = Controls(window);
 	}
 	Save_Image();
 	SDL_DestroyWindow(window);

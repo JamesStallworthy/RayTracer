@@ -20,13 +20,14 @@ private:
 	float Fov;
 	float t;
 	glm::vec3 Normal;
-	Light* light;
-	AreaLight* arealight;
 	SDL_Window *window;
 	SDL_Surface *surface;
 	Uint32 PixelColour;
 	SDL_Rect Pixel;
+	Light* light;
+	AreaLight* arealight;
 public:
+	bool Shadows = true;
 	glm::vec3 Origin;
 	glm::vec3 Direction;
 	Ray::Ray(float, int, int, Light*, AreaLight*, int);

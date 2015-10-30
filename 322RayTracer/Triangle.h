@@ -19,6 +19,8 @@ public:
 	};
 	virtual Intersect Intersection(glm::vec3 Origin, glm::vec3 Direction);
 	virtual glm::vec3 PhongShading(float, glm::vec3, glm::vec3, glm::vec3, float, Shape*[], int numberofshapes);
+	virtual glm::vec3 GetOrigin() { return glm::vec3(0, 0, 0); };
+	virtual void SetOrigin(glm::vec3) {};
 	//glm::vec3 CalcAmbient();
 	//glm::vec3 CalcDiffuse(glm::vec3, glm::vec3);
 	//glm::vec3 CalcSpecular(glm::vec3, glm::vec3, glm::vec3, glm::vec3);

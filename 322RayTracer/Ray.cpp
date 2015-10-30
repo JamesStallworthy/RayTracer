@@ -34,7 +34,7 @@ Intersect Ray::CheckHit(Shape* SArray[], glm::vec3 _O, glm::vec3 _D)
 void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 {
 	//SDL clear screen
-	SDL_FillRect(surface, NULL, 0x000000);
+	SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0.588*255, 0.78*255));
 	//Pixel Colour
 	glm::vec3 ReturnedColour;
 	
@@ -55,7 +55,7 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 			
 			intersection = CheckHit(ShapeArray,Origin, Direction);
 			if (intersection.ObjectID != -1) {
-				if (light != NULL) {
+				if (!Shadows) {
 					//HARD SHADOWS
 					if (!HardShadows(ShapeArray, intersection))
 						ReturnedColour = (ShapeArray[intersection.ObjectID]->PhongShading(intersection.Distance, Origin, Direction,light->Position, light->Intensity, ShapeArray, AmountOfShapes));
@@ -89,7 +89,7 @@ bool Ray::HardShadows(Shape* _ShapeArray[], Intersect i)
 	glm::vec3 ContactPoint = Origin+ i.Distance*Direction;
 	glm::vec3 VecToLight = glm::normalize(light->Position - ContactPoint);
 	//Intesection
-	Intersect intersect = CheckHit(_ShapeArray, ContactPoint + i.Normal*0.001f, VecToLight);
+	Intersect intersect = CheckHit(_ShapeArray, ContactPoint + i.Normal*0.0001f, VecToLight);
 	if (intersect.ObjectID == -1 || intersect.ObjectID == i.ObjectID)
 		return false;
 	else
