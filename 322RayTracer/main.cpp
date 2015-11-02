@@ -45,8 +45,8 @@ Shape* Thirteen = new Sphere(glm::vec3(2, 1, -26), 2, glm::vec3(0, 0.2, 0.7), 0.
 Shape* Fourteen = new Sphere(glm::vec3(0, 4, -24), 2, glm::vec3(0, 0.2, 0.7), 0.1, 100, true, 1, 0.2);
 
 //Mirrow Balls
-Shape* Mirror1 = new Sphere(glm::vec3(15, 4, -24), 5, glm::vec3(1, 1, 0), 0.1, 10, true, 1, 0.07);
-Shape* Mirror2 = new Sphere(glm::vec3(-25, 6, -35), 5, glm::vec3(0.6, 0.6, 0.6), 0.1, 10, true, 1, 0.1);
+Shape* Mirror1 = new Sphere(glm::vec3(15, 4, -24), 5, glm::vec3(1, 0, 0), 0.1, 10, true, 1, 0.1);
+Shape* Mirror2 = new Sphere(glm::vec3(-25, 6, -35), 5, glm::vec3(0, 0, 0.6), 0.1, 10, true, 1, 0.1);
 
 //Floor
 Shape* plane = new Plane(glm::vec3(0, -4, -20), glm::vec3(0, 1, 0), glm::vec3(0.2, 0.2, 0.2),0.1,10000, false, 1, 1);

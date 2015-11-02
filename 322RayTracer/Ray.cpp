@@ -19,7 +19,7 @@ float Ray::PixelNormalized(int val,int secondVal)
 Intersect Ray::CheckHit(Shape* SArray[], glm::vec3 _O, glm::vec3 _D)
 {
 	Intersect TempInt(0, glm::vec3(0, 0, 0));
-	Intersect LowestIntersect(99999, glm::vec3(0, 0, 0));
+	Intersect LowestIntersect(99999.0f, glm::vec3(0, 0, 0));
 	for (int i = 0; i < AmountOfShapes; i++) {
 		TempInt = SArray[i]->Intersection(_O, _D);
 		if (TempInt.Distance != -1 && TempInt.Distance < LowestIntersect.Distance) {
@@ -46,8 +46,8 @@ void Ray::RayCast(glm::vec3** img, Shape* ShapeArray[])
 	Intersect intersection(0, glm::vec3(0, 0, 0));
 	for (int x = 0; x < width; x++) {
 		for (int y = 0; y < height; y++) {
-			RemappedX = ((2*PixelNormalized(x,width) - 1)*ImageAspectRatio);
-			RemappedY = (1 -2*PixelNormalized(y,height));
+			RemappedX = ((2.0f*PixelNormalized(float(x),float(width)) - 1.0f)*ImageAspectRatio);
+			RemappedY = (1.0f -2.0f*PixelNormalized(float(y),float(height)));
 			WorldSpacex = RemappedX * Fov;
 			WorldSpacey = RemappedY * Fov;
 			Pcameraspace = glm::vec3(WorldSpacex+ Origin.x, WorldSpacey + Origin.y,-1+Origin.z);
