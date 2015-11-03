@@ -161,7 +161,7 @@ void movesphere() {
 }
 
 int main(int argc, char *argv[]) {
-
+	//ray.Shadows = false;
 	//SDL init
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_Window *window;

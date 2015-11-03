@@ -1,5 +1,6 @@
 #include "Ray.h"
 #include <math.h>
+
 Ray::Ray(float _Fov, int ScreenWidth, int ScreenHeight,Light* _light, AreaLight* _arealight, int _Amount) {
 	Origin = glm::vec3(0,0,0);
 	width = ScreenWidth;
@@ -13,15 +14,14 @@ Ray::Ray(float _Fov, int ScreenWidth, int ScreenHeight,Light* _light, AreaLight*
 
 float Ray::PixelNormalized(int val,int secondVal)
 {
-	return ((float)val + 0.5)/secondVal;
+	return ((float)val + 0.5f)/secondVal;
 }
 
 Intersect Ray::CheckHit(Shape* SArray[], glm::vec3 _O, glm::vec3 _D)
 {
-	Intersect TempInt(0, glm::vec3(0, 0, 0));
 	Intersect LowestIntersect(99999.0f, glm::vec3(0, 0, 0));
 	for (int i = 0; i < AmountOfShapes; i++) {
-		TempInt = SArray[i]->Intersection(_O, _D);
+		Intersect TempInt = SArray[i]->Intersection(_O, _D);
 		if (TempInt.Distance != -1 && TempInt.Distance < LowestIntersect.Distance) {
 			LowestIntersect = TempInt;
 			LowestIntersect.ObjectID = i;
@@ -113,6 +113,7 @@ float Ray::SoftShadows(Shape * _ShapeArray[], Intersect i)
 	float average = 0;
 	glm::vec3 ContactPoint = Origin + i.Distance*Direction;
 	glm::vec3 VecToLight;
+	//glm::vec3 VecToLight;
 	srand(1);
 	for (int z = 0; z < arealight->samples; z++) {
 		VecToLight = glm::normalize(RandomPointInAreaLight() - ContactPoint);
@@ -120,7 +121,7 @@ float Ray::SoftShadows(Shape * _ShapeArray[], Intersect i)
 		if (intersect.ObjectID == -1 || intersect.ObjectID == i.ObjectID)
 			average ++;
 	}
-	return 1-(average / arealight->samples);
+	return 1.0f-(average / arealight->samples);
 }
 
 glm::vec3 Ray::RandomPointInAreaLight()
